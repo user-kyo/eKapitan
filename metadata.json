@@ -1,0 +1,6 @@
+{
+  "name": "e-Kapitan - Barangay Citizen & Government Services",
+  "description": "Modern web-based barangay information management and citizen service platform connecting residents, staff, and officials with digital document issuance, intelligent queueing, incident tracking, and AI assistance.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
