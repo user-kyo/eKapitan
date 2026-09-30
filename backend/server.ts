@@ -151,19 +151,16 @@ Please provide a helpful, concise, well-structured, and polite response for the 
     res.json({ status: 'ok', time: new Date().toISOString() });
   });
 
-  // Vite middleware in dev or static files in production
-  if (process.env.NODE_ENV !== 'production') {
-    const { createServer: createViteServer } = await import('vite');
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa',
-    });
-    app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), 'dist');
+  // Serve frontend static files in production
+  if (process.env.NODE_ENV === 'production') {
+    const distPath = path.join(__dirname, '../frontend/dist');
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
+    });
+  } else {
+    app.get('/', (req, res) => {
+      res.send('e-Kapitan API Server is running. In dev mode, run the Vite server in the frontend directory.');
     });
   }
 
