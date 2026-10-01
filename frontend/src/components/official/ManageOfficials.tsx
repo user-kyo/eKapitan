@@ -181,17 +181,21 @@ export const ManageOfficials: React.FC = () => {
                     {editingId === official.id ? (
                       <select 
                         className="bg-white border border-purple-300 rounded-md px-2 py-1 text-sm outline-none"
-                        value={editForm.isActive ? 'active' : 'inactive'}
-                        onChange={e => setEditForm({...editForm, isActive: e.target.value === 'active'})}
+                        value={editForm.status || 'Active (Incumbent)'}
+                        onChange={e => setEditForm({...editForm, status: e.target.value as Official['status']})}
                       >
-                        <option value="active">Active (Incumbent)</option>
-                        <option value="inactive">Inactive</option>
+                        <option value="Active (Incumbent)">Active (Incumbent)</option>
+                        <option value="Inactive (Former)">Inactive</option>
+                        <option value="Suspended">Suspended</option>
+                        <option value="On Leave (Absent)">On Leave (Absent)</option>
                       </select>
                     ) : (
                       <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                        official.isActive ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'
+                        official.status === 'Active (Incumbent)' ? 'bg-emerald-100 text-emerald-800' : 
+                        official.status === 'On Leave (Absent)' ? 'bg-amber-100 text-amber-800' :
+                        'bg-slate-100 text-slate-600'
                       }`}>
-                        {official.isActive ? 'ACTIVE' : 'INACTIVE'}
+                        {official.status.toUpperCase()}
                       </span>
                     )}
                   </td>

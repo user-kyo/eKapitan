@@ -25,7 +25,7 @@ export const DocumentVerification: React.FC = () => {
     if (!inputCode.trim()) return;
 
     const result = verifyDocumentCode(inputCode.trim());
-    setVerifiedDoc(result || null);
+    setVerifiedDoc(result.document || null);
     setSearched(true);
   };
 
@@ -80,8 +80,8 @@ export const DocumentVerification: React.FC = () => {
               type="button"
               onClick={() => {
                 setInputCode(s.code);
-                const result = verifyDocumentByCode(s.code);
-                setVerifiedDoc(result || null);
+                const result = verifyDocumentCode(s.code);
+                setVerifiedDoc(result.document || null);
                 setSearched(true);
               }}
               className="px-2 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-800 rounded-md font-mono text-[11px] transition-colors border border-slate-200 cursor-pointer"

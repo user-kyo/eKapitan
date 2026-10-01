@@ -77,6 +77,13 @@ const MainAppContent: React.FC = () => {
     { id: 'officials_directory', label: 'Officials Directory' },
   ];
 
+  const guestTabs = [
+    { id: 'complaints', label: 'Report Incident' },
+    { id: 'qr_verify', label: 'Verify Document' },
+    { id: 'announcements', label: 'Advisories' },
+    { id: 'officials_directory', label: 'Officials Directory' },
+  ];
+
   const staffTabs = [
     { id: 'dashboard', label: 'Operations Desk' },
     { id: 'staff_documents', label: 'Document Queue' },
@@ -96,6 +103,7 @@ const MainAppContent: React.FC = () => {
   ];
 
   const currentTabs = 
+    currentRole === 'guest' ? guestTabs :
     currentRole === 'citizen' ? citizenTabs :
     currentRole === 'staff' ? staffTabs : officialTabs;
 
@@ -162,8 +170,10 @@ const MainAppContent: React.FC = () => {
         return <ManageOfficials />;
 
       default:
-        return currentRole === 'citizen' 
-          ? <CitizenHome /> 
+        return currentRole === 'citizen'
+          ? <CitizenHome />
+          : currentRole === 'guest'
+          ? <OfficialAnnouncementsManager />
           : currentRole === 'staff' 
           ? <StaffDashboard /> 
           : <ExecutiveDashboard />;
@@ -181,7 +191,7 @@ const MainAppContent: React.FC = () => {
       <Header />
 
       {/* Role-Specific Sub-Navbar Navigation */}
-      <div className="hidden lg:block bg-white border-b border-slate-200 sticky top-16 sm:top-20 z-30 shadow-2xs overflow-x-auto scrollbar-none">
+      <div className="hidden lg:block bg-white border-b border-slate-200 shadow-2xs overflow-x-auto scrollbar-none">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-1 sm:gap-2 py-2.5">
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mr-2 hidden md:inline">
@@ -195,7 +205,9 @@ const MainAppContent: React.FC = () => {
                   onClick={() => setActiveTab(tab.id)}
                   className={`px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all cursor-pointer ${
                     isActive
-                      ? currentRole === 'citizen'
+                      ? currentRole === 'guest'
+                        ? 'bg-amber-700 text-white shadow-xs'
+                        : currentRole === 'citizen'
                         ? 'bg-emerald-700 text-white shadow-xs'
                         : currentRole === 'staff'
                         ? 'bg-blue-700 text-white shadow-xs'
@@ -213,7 +225,7 @@ const MainAppContent: React.FC = () => {
       </div>
 
       {/* Main App Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <main className="print:hidden flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {renderCurrentView()}
       </main>
 
@@ -226,7 +238,7 @@ const MainAppContent: React.FC = () => {
       )}
 
       {/* Clean Civic Footer */}
-      <footer className="no-print bg-white border-t border-slate-200 mt-12 py-8 text-xs text-slate-500">
+      <footer className="print:hidden bg-white border-t border-slate-200 mt-12 py-8 text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full border border-slate-300 flex items-center justify-center font-bold text-[11px] text-emerald-800 bg-emerald-50">

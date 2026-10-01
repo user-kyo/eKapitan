@@ -13,11 +13,13 @@ import {
   PlusCircle,
   FileText,
   Filter,
-  Send
+  Send,
+  Sparkles,
+  ArrowRight
 } from 'lucide-react';
 
 export const IncidentBlotterDesk: React.FC = () => {
-  const { incidents, updateIncidentReportStatus, largeTextMode } = useBarangay();
+  const { incidents, officials, updateIncidentReportStatus, largeTextMode } = useBarangay();
 
   const [selectedIncId, setSelectedIncId] = useState<string>(incidents[0]?.id || '');
   const [filterStatus, setFilterStatus] = useState<string>('All');
@@ -59,6 +61,36 @@ export const IncidentBlotterDesk: React.FC = () => {
     );
     setShowResolveModal(false);
     setResolutionSummary('');
+  };
+
+  const getAIRecommendation = () => {
+    if (!activeIncident || activeIncident.status !== 'received') return null;
+
+    let targetCommittee = 'Committee on Peace and Order';
+    if (activeIncident.category === 'Sanitation & Garbage') targetCommittee = 'Committee on Health and Sanitation';
+    if (activeIncident.category === 'Drainage / Flooding') targetCommittee = 'Committee on Public Works';
+
+    const candidates = officials.filter(o => o.committee === targetCommittee);
+    let best = candidates[0] || officials.find(o => o.committee.includes('Peace')) || officials[0];
+
+    if (best && best.status === 'On Leave (Absent)') {
+      const substitutes = officials.filter(o => o.status === 'Active (Incumbent)' && o.id !== best.id);
+      const sub = substitutes[0] || officials[0];
+      return { recommended: best, isAbsent: true, substitute: sub };
+    }
+    return { recommended: best, isAbsent: false, substitute: null };
+  };
+
+  const aiRecommendation = getAIRecommendation();
+
+  const handleConfirmAIAssignment = () => {
+    if (!activeIncident || !aiRecommendation) return;
+    const assignee = aiRecommendation.isAbsent ? aiRecommendation.substitute : aiRecommendation.recommended;
+    updateIncidentReportStatus(
+      activeIncident.id,
+      'assigned',
+      `AI Assigned to ${assignee?.name} (${assignee?.position})`
+    );
   };
 
   return (
@@ -247,6 +279,60 @@ export const IncidentBlotterDesk: React.FC = () => {
                 ))}
               </div>
             </div>
+
+            {/* AI Assistant Assignment Recommendation */}
+            {aiRecommendation && (
+              <div className="bg-gradient-to-r from-indigo-50 to-purple-50 p-4 rounded-xl border border-indigo-100 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-4 opacity-10">
+                  <Sparkles className="w-16 h-16 text-indigo-600" />
+                </div>
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 text-indigo-700 text-xs font-bold uppercase tracking-wider mb-2">
+                    <Sparkles className="w-4 h-4" />
+                    <span>AI Task Assignment Recommendation</span>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between bg-white/60 p-3 rounded-lg border border-indigo-50">
+                      <div>
+                        <p className="text-[10px] text-slate-500 font-bold uppercase">Primary Match (Role/Load)</p>
+                        <p className="text-sm font-bold text-slate-800">{aiRecommendation.recommended?.name}</p>
+                        <p className="text-[10px] text-slate-600">{aiRecommendation.recommended?.position} - {aiRecommendation.recommended?.committee}</p>
+                      </div>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${aiRecommendation.isAbsent ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'}`}>
+                        {aiRecommendation.isAbsent ? 'ON LEAVE' : 'AVAILABLE'}
+                      </span>
+                    </div>
+
+                    {aiRecommendation.isAbsent && aiRecommendation.substitute && (
+                      <div className="flex items-start justify-between bg-white/60 p-3 rounded-lg border border-purple-100 shadow-xs border-l-4 border-l-purple-500">
+                        <div>
+                          <div className="flex items-center gap-1.5 mb-0.5">
+                            <p className="text-[10px] text-purple-600 font-bold uppercase">Substitute Suggested</p>
+                            <ArrowRight className="w-3 h-3 text-purple-400" />
+                          </div>
+                          <p className="text-sm font-bold text-slate-800">{aiRecommendation.substitute.name}</p>
+                          <p className="text-[10px] text-slate-600">{aiRecommendation.substitute.position} - {aiRecommendation.substitute.committee}</p>
+                        </div>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                          AVAILABLE
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="mt-4 flex justify-end gap-2">
+                    <button onClick={() => setActionNote('Rejected AI recommendation. ')} className="px-3 py-1.5 text-[11px] font-bold text-slate-600 hover:bg-slate-200/50 rounded-lg transition-colors">
+                      Reject
+                    </button>
+                    <button onClick={handleConfirmAIAssignment} className="px-4 py-1.5 text-[11px] font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-xs transition-colors flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4" />
+                      Confirm Assignment
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Action Inputs */}
             {activeIncident.status !== 'resolved' && (

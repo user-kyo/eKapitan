@@ -6,7 +6,7 @@ export const OfficialsDirectory: React.FC = () => {
   const { officials, largeTextMode } = useBarangay();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const activeOfficials = officials.filter(o => o.isActive);
+  const activeOfficials = officials.filter(o => o.status === 'Active (Incumbent)' || o.status === 'On Leave (Absent)');
   const filteredOfficials = activeOfficials.filter(o => 
     o.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     o.position.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -54,9 +54,16 @@ export const OfficialsDirectory: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-slate-900 leading-tight group-hover:text-purple-700 transition-colors">{official.name}</h3>
-                  <div className="inline-flex items-center gap-1 mt-1 text-xs font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-100">
-                    <ShieldCheck className="w-3 h-3" />
-                    {official.position}
+                  <div className="flex flex-wrap items-center gap-1 mt-1">
+                    <div className="inline-flex items-center gap-1 text-xs font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-100">
+                      <ShieldCheck className="w-3 h-3" />
+                      {official.position}
+                    </div>
+                    {official.status === 'On Leave (Absent)' && (
+                      <span className="inline-flex items-center text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                        ON LEAVE
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
