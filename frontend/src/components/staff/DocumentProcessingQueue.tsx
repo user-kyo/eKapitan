@@ -221,7 +221,7 @@ export const DocumentProcessingQueue: React.FC = () => {
               <div className="flex items-center gap-2.5">
                 <ShieldCheck className="w-5 h-5 text-emerald-700 shrink-0" />
                 <div>
-                  <span className="font-bold text-emerald-950 block">Barangay San Jose Civil Blotter Verification</span>
+                  <span className="font-bold text-emerald-950 block">Barangay 4A Civil Blotter Verification</span>
                   <span className="text-emerald-800">Clear Record: No active warrant, pending Lupon mediation, or citation.</span>
                 </div>
               </div>

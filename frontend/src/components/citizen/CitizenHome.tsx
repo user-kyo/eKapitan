@@ -102,7 +102,7 @@ export const CitizenHome: React.FC = () => {
         <div className="relative z-10 max-w-3xl">
           <div className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-3 py-1 rounded-full text-xs font-semibold mb-4">
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Official Digital Service Portal • Barangay San Jose</span>
+            <span>Official Digital Service Portal • Barangay 4A</span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight font-heading leading-tight">

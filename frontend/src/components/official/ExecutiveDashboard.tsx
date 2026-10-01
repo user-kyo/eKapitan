@@ -109,7 +109,7 @@ export const ExecutiveDashboard: React.FC = () => {
               1. Document Demand & Youth Employment
             </span>
             <p className="text-slate-200">
-              First-Time Jobseeker certification requests have increased by <strong>+24%</strong> this month. Recommend maintaining an expedited priority counter window ahead of the Pasig City Job Fair.
+              First-Time Jobseeker certification requests have increased by <strong>+24%</strong> this month. Recommend maintaining an expedited priority counter window ahead of the San Pablo City Job Fair.
             </p>
           </div>
 

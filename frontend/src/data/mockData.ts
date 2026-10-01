@@ -35,14 +35,14 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     id: 'certificate_of_residency',
     title: 'Certificate of Residency',
     category: 'Certification',
-    description: 'Attests that the individual has been a bona fide resident of Barangay San Jose for at least 6 months. Required for school enrollment, utility connections, and bank requirements.',
+    description: 'Attests that the individual has been a bona fide resident of Barangay 4A for at least 6 months. Required for school enrollment, utility connections, and bank requirements.',
     fee: 30,
     isFreeForEligible: true,
     eligibleCriteria: 'Free for registered indigent residents and public school students',
     processingTime: '10-20 minutes',
     requirements: [
       'Proof of billing under applicant’s name (Meralco, Manila Water, Internet) OR HOA / Landlord certification',
-      'Valid ID showing address in Barangay San Jose'
+      'Valid ID showing address in Barangay 4A'
     ],
     validityMonths: 6,
     availableOnline: true,
@@ -67,7 +67,7 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     id: 'business_clearance',
     title: 'Barangay Business Clearance',
     category: 'Permit',
-    description: 'Mandatory clearance for commercial establishments, sari-sari stores, and home-based businesses operating within the territorial jurisdiction of Barangay San Jose.',
+    description: 'Mandatory clearance for commercial establishments, sari-sari stores, and home-based businesses operating within the territorial jurisdiction of Barangay 4A.',
     fee: 350,
     isFreeForEligible: false,
     eligibleCriteria: 'Based on registered gross capital',
@@ -119,7 +119,7 @@ export const INITIAL_SERVICES: ServiceItem[] = [
 export const INITIAL_RESIDENTS: Resident[] = [
   {
     id: 'res-001',
-    residentNumber: 'BSJ-2024-0012',
+    residentNumber: 'B4A-2024-0012',
     firstName: 'Maria Corazon',
     middleName: 'Del Rosario',
     lastName: 'Santos',
@@ -142,7 +142,7 @@ export const INITIAL_RESIDENTS: Resident[] = [
   },
   {
     id: 'res-002',
-    residentNumber: 'BSJ-2024-0013',
+    residentNumber: 'B4A-2024-0013',
     firstName: 'Maria C.',
     middleName: 'D.',
     lastName: 'Santos',
@@ -165,7 +165,7 @@ export const INITIAL_RESIDENTS: Resident[] = [
   },
   {
     id: 'res-003',
-    residentNumber: 'BSJ-2022-0198',
+    residentNumber: 'B4A-2022-0198',
     firstName: 'Eduardo',
     middleName: 'Villanueva',
     lastName: 'Reyes',
@@ -188,7 +188,7 @@ export const INITIAL_RESIDENTS: Resident[] = [
   },
   {
     id: 'res-004',
-    residentNumber: 'BSJ-2023-0442',
+    residentNumber: 'B4A-2023-0442',
     firstName: 'Juan Paolo',
     middleName: 'Alcantara',
     lastName: 'Mendoza',
@@ -211,7 +211,7 @@ export const INITIAL_RESIDENTS: Resident[] = [
   },
   {
     id: 'res-005',
-    residentNumber: 'BSJ-2023-0511',
+    residentNumber: 'B4A-2023-0511',
     firstName: 'Theresa',
     middleName: 'Bernardo',
     lastName: 'Lim',
@@ -234,7 +234,7 @@ export const INITIAL_RESIDENTS: Resident[] = [
   },
   {
     id: 'res-006',
-    residentNumber: 'BSJ-2021-0089',
+    residentNumber: 'B4A-2021-0089',
     firstName: 'Ramonito',
     middleName: 'Bautista',
     lastName: 'Flores',
@@ -252,7 +252,7 @@ export const INITIAL_RESIDENTS: Resident[] = [
     isVoter: true,
     registeredDate: '2016-01-18',
     status: 'active',
-    notes: 'PWD ID: PWD-SJ-2022-041 (Orthopedic).'
+    notes: 'PWD ID: PWD-4A-2022-041 (Orthopedic).'
   }
 ];
 
@@ -354,7 +354,7 @@ export const INITIAL_DOCUMENT_REQUESTS: DocumentRequest[] = [
     assignedStaffId: 'staff-elena',
     assignedStaffName: 'Elena Ramos (Records)',
     staffNotes: 'Voter records verified. No derogatory record on file. Ready to print.',
-    verificationCode: 'VER-BSJ-78921-99',
+    verificationCode: 'VER-B4A-78921-99',
     requirementsSubmitted: [
       { name: 'Valid Government ID (PRC License)', submitted: true, verified: true },
       { name: 'Community Tax Certificate (Cedula)', submitted: true, verified: true },
@@ -383,10 +383,10 @@ export const INITIAL_DOCUMENT_REQUESTS: DocumentRequest[] = [
     assignedStaffId: 'staff-elena',
     assignedStaffName: 'Elena Ramos (Records)',
     staffNotes: 'Signed Oath of Undertaking uploaded. Fee waiver applied.',
-    verificationCode: 'VER-BSJ-44312-01',
+    verificationCode: 'VER-B4A-44312-01',
     requirementsSubmitted: [
       { name: 'College Transcript / Diploma', submitted: true, verified: true },
-      { name: 'Proof of Residency in Barangay San Jose', submitted: true, verified: true },
+      { name: 'Proof of Residency in Barangay 4A', submitted: true, verified: true },
       { name: 'Signed Oath of Undertaking', submitted: true, verified: true }
     ]
   },
@@ -411,7 +411,7 @@ export const INITIAL_DOCUMENT_REQUESTS: DocumentRequest[] = [
     assignedStaffId: 'staff-elena',
     assignedStaffName: 'Elena Ramos (Records)',
     staffNotes: 'Checking zoning clearance and sanitary permit attachment.',
-    verificationCode: 'VER-BSJ-55691-34',
+    verificationCode: 'VER-B4A-55691-34',
     requirementsSubmitted: [
       { name: 'DTI Registration Certificate', submitted: true, verified: true },
       { name: 'Previous Year Clearance', submitted: true, verified: false },
@@ -427,7 +427,7 @@ export const INITIAL_DOCUMENT_REQUESTS: DocumentRequest[] = [
     residentName: 'Ramonito Bautista Flores',
     purok: 'Purok 5 - San Roque',
     contactNumber: '0919-444-1122',
-    purpose: 'Medical and surgical assistance endorsement to Malasakit Center / Pasig General Hospital',
+    purpose: 'Medical and surgical assistance endorsement to Malasakit Center / San Pablo General Hospital',
     status: 'completed',
     submittedAt: '2026-09-07 10:00 AM',
     updatedAt: '2026-09-08 11:30 AM',
@@ -439,9 +439,9 @@ export const INITIAL_DOCUMENT_REQUESTS: DocumentRequest[] = [
     assignedStaffId: 'staff-elena',
     assignedStaffName: 'Elena Ramos (Records)',
     staffNotes: 'Approved by Kagawad on Health. Certificate released and QR validated.',
-    verificationCode: 'VER-BSJ-99882-77',
+    verificationCode: 'VER-B4A-99882-77',
     requirementsSubmitted: [
-      { name: 'Medical Abstract from Pasig General Hospital', submitted: true, verified: true },
+      { name: 'Medical Abstract from San Pablo General Hospital', submitted: true, verified: true },
       { name: 'PWD ID card', submitted: true, verified: true },
       { name: 'Purok Leader Verification', submitted: true, verified: true }
     ]
@@ -465,7 +465,7 @@ export const INITIAL_DOCUMENT_REQUESTS: DocumentRequest[] = [
     processingMethod: 'pickup',
     appointmentDate: '2026-09-10',
     appointmentTime: '09:00 AM',
-    verificationCode: 'VER-BSJ-11234-88',
+    verificationCode: 'VER-B4A-11234-88',
     requirementsSubmitted: [
       { name: 'Senior Citizen ID', submitted: true, verified: false },
       { name: 'Meralco Electric Bill', submitted: true, verified: false }
@@ -702,7 +702,7 @@ export const INITIAL_ANNOUNCEMENTS: Announcement[] = [
     id: 'anc-001',
     title: 'Bantay Bagyo: Weather Advisory & Flood Gate Status',
     category: 'Advisory',
-    content: 'PAGASA has hoisted Tropical Cyclone Wind Signal No. 1 over Metro Manila. The Barangay San Jose Disaster Risk Reduction and Management Council (BDRRMC) is on Blue Alert. Pumping stations on Riverside are 100% operational. Emergency hotline: (02) 8642-1111.',
+    content: 'PAGASA has hoisted Tropical Cyclone Wind Signal No. 1 over Metro Manila. The Barangay 4A Disaster Risk Reduction and Management Council (BDRRMC) is on Blue Alert. Pumping stations on Riverside are 100% operational. Emergency hotline: (02) 8642-1111.',
     date: '2026-09-09',
     author: 'Barangay Disaster Risk Reduction Committee',
     isUrgent: true,
@@ -712,7 +712,7 @@ export const INITIAL_ANNOUNCEMENTS: Announcement[] = [
     id: 'anc-002',
     title: 'Free Pneumococcal & Flu Vaccination for Senior Citizens',
     category: 'Health',
-    content: 'All registered Senior Citizens (60 years old and above) of Barangay San Jose are invited to the Barangay Health Center this coming Friday, 8:00 AM to 3:00 PM. Please bring your Senior Citizen ID and immunization booklet.',
+    content: 'All registered Senior Citizens (60 years old and above) of Barangay 4A are invited to the Barangay Health Center this coming Friday, 8:00 AM to 3:00 PM. Please bring your Senior Citizen ID and immunization booklet.',
     date: '2026-09-08',
     author: 'Barangay Health Center',
     isUrgent: false,
@@ -773,7 +773,7 @@ export const INITIAL_KNOWLEDGE_BASE: KnowledgeBaseItem[] = [
     id: 'kb-001',
     category: 'Clearance',
     question: 'What are the requirements for Barangay Clearance?',
-    answer: 'To get a Barangay Clearance, prepare: 1) Valid Government ID or Student ID with your Barangay San Jose address, 2) Community Tax Certificate (Cedula) for the current year, and 3) 1x1 or 2x2 ID picture. Fee is ₱50.00 for employment, ₱100.00 for business, or 100% FREE for First-Time Jobseekers under Republic Act 11261.',
+    answer: 'To get a Barangay Clearance, prepare: 1) Valid Government ID or Student ID with your Barangay 4A address, 2) Community Tax Certificate (Cedula) for the current year, and 3) 1x1 or 2x2 ID picture. Fee is ₱50.00 for employment, ₱100.00 for business, or 100% FREE for First-Time Jobseekers under Republic Act 11261.',
     keywords: ['clearance', 'trabaho', 'cedula', 'requirements', 'fee'],
     lastUpdated: '2026-09-01'
   },
@@ -796,7 +796,7 @@ export const INITIAL_KNOWLEDGE_BASE: KnowledgeBaseItem[] = [
   {
     id: 'kb-004',
     category: 'Office Hours',
-    question: 'What are the operating hours of Barangay San Jose Hall?',
+    question: 'What are the operating hours of Barangay 4A Hall?',
     answer: 'Barangay Hall is open Monday to Friday from 8:00 AM to 5:00 PM. Cut-off for on-site queue ticketing is 4:30 PM. For 24/7 emergencies, disaster response, and Tanod dispatch, our hotline is (02) 8642-1111.',
     keywords: ['hours', 'oras', 'bukas', 'schedule', 'weekend', 'hotline'],
     lastUpdated: '2026-09-01'

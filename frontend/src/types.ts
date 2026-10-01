@@ -1,4 +1,4 @@
-export type UserRole = 'citizen' | 'staff' | 'official';
+export type UserRole = 'citizen' | 'staff' | 'official' | 'guest';
 
 export interface UserProfile {
   id: string;
@@ -14,7 +14,7 @@ export type ResidentStatus = 'active' | 'archived' | 'deceased' | 'transferred';
 
 export interface Resident {
   id: string;
-  residentNumber: string; // e.g., "BSJ-2024-0012"
+  residentNumber: string; // e.g., "B4A-2024-0012"
   firstName: string;
   middleName?: string;
   lastName: string;

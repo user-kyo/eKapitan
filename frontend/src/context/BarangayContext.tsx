@@ -40,6 +40,8 @@ export interface ToastMessage {
 
 interface BarangayContextType {
   // Authentication / Role
+  isAuthenticated: boolean;
+  setIsAuthenticated: (val: boolean) => void;
   currentRole: UserRole;
   setCurrentRole: (role: UserRole) => void;
   currentUser: UserProfile;
@@ -134,10 +136,18 @@ const ROLE_PROFILES: Record<UserRole, UserProfile> = {
     roleTitle: 'Punong Barangay / Chief Administrator',
     email: 'captain.gomez@barangaysanjose.gov.ph',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'
+  },
+  guest: {
+    id: 'user-guest',
+    name: 'Guest User',
+    role: 'guest',
+    roleTitle: 'Non-Resident / Guest',
+    email: 'guest@e-kapitan.local',
   }
 };
 
 export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [currentRole, setCurrentRole] = useState<UserRole>('citizen');
   const [currentUser, setCurrentUser] = useState<UserProfile>(ROLE_PROFILES.citizen);
   const [activeTab, setActiveTab] = useState<string>('home');
@@ -212,6 +222,8 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       setActiveTab('home');
     } else if (role === 'staff') {
       setActiveTab('dashboard');
+    } else if (role === 'guest') {
+      setActiveTab('guest_home');
     } else {
       setActiveTab('executive_dashboard');
     }
@@ -224,7 +236,7 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const createDocumentRequest = (data: Partial<DocumentRequest>): DocumentRequest => {
     const refNum = `REQ-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-    const verCode = `VER-BSJ-${Math.floor(10000 + Math.random() * 90000)}-${Math.floor(10 + Math.random() * 90)}`;
+    const verCode = `VER-B4A-${Math.floor(10000 + Math.random() * 90000)}-${Math.floor(10 + Math.random() * 90)}`;
     
     const newReq: DocumentRequest = {
       id: 'req-' + Date.now(),
@@ -429,7 +441,7 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       category: data.category || 'Other Community Concern',
       title: data.title || 'Barangay Concern Report',
       description: data.description || '',
-      location: data.location || 'Barangay San Jose',
+      location: data.location || 'Barangay 4A',
       purok: data.purok || 'Purok 1 - Centro',
       incidentDateTime: data.incidentDateTime || new Date().toISOString().substring(0, 16).replace('T', ' '),
       reporterName: data.isAnonymous ? 'Anonymous Resident' : (data.reporterName || currentUser.name),
@@ -483,7 +495,7 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const registerResident = (data: Omit<Resident, 'id' | 'residentNumber' | 'registeredDate'>): Resident => {
-    const resNum = `BSJ-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+    const resNum = `B4A-2026-${Math.floor(1000 + Math.random() * 9000)}`;
     const newResident: Resident = {
       ...data,
       id: 'res-' + Date.now(),
@@ -600,7 +612,7 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         return {
           found: true,
           document: doc,
-          message: 'Document record verified as authentic and legally issued by Barangay San Jose.'
+          message: 'Document record verified as authentic and legally issued by Barangay 4A.'
         };
       }
       return {
@@ -619,6 +631,8 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   return (
     <BarangayContext.Provider
       value={{
+        isAuthenticated,
+        setIsAuthenticated,
         currentRole,
         setCurrentRole,
         currentUser,

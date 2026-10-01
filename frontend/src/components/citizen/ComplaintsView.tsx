@@ -37,8 +37,8 @@ export const ComplaintsView: React.FC = () => {
   );
   const [isAnonymous, setIsAnonymous] = useState<boolean>(false);
   const [searchRef, setSearchRef] = useState<string>('');
-
   const [selectedIncidentId, setSelectedIncidentId] = useState<string>(incidents[0]?.id || '');
+  const [showMobileDetail, setShowMobileDetail] = useState<boolean>(false);
 
   const categories: IncidentCategory[] = [
     'Noise Disturbance',
@@ -108,10 +108,10 @@ export const ComplaintsView: React.FC = () => {
         </div>
 
         {/* Tab Toggle */}
-        <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 shrink-0">
+        <div className="flex w-full sm:w-auto bg-slate-100 p-1 rounded-xl border border-slate-200 shrink-0">
           <button
             onClick={() => setActiveTabSub('submit')}
-            className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+            className={`flex-1 sm:flex-none px-3 sm:px-4 py-2.5 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
               activeTabSub === 'submit'
                 ? 'bg-amber-600 text-white shadow-xs'
                 : 'text-slate-600 hover:text-slate-900'
@@ -120,8 +120,8 @@ export const ComplaintsView: React.FC = () => {
             File New Report
           </button>
           <button
-            onClick={() => setActiveTabSub('history')}
-            className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+            onClick={() => { setActiveTabSub('history'); setShowMobileDetail(false); }}
+            className={`flex-1 sm:flex-none px-3 sm:px-4 py-2.5 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
               activeTabSub === 'history'
                 ? 'bg-slate-900 text-white shadow-xs'
                 : 'text-slate-600 hover:text-slate-900'
@@ -273,9 +273,9 @@ export const ComplaintsView: React.FC = () => {
         </div>
       ) : (
         /* Report Tracking Timeline View */
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate-in fade-in">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate-in fade-in relative">
           {/* List of Reports */}
-          <div className="lg:col-span-5 space-y-3">
+          <div className={`lg:col-span-5 space-y-3 ${showMobileDetail ? 'hidden lg:block' : 'block'}`}>
             <div className="relative">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               <input
@@ -293,7 +293,7 @@ export const ComplaintsView: React.FC = () => {
                 return (
                   <div
                     key={inc.id}
-                    onClick={() => setSelectedIncidentId(inc.id)}
+                    onClick={() => { setSelectedIncidentId(inc.id); setShowMobileDetail(true); }}
                     className={`p-4 rounded-xl border transition-all cursor-pointer ${
                       isSelected
                         ? 'border-amber-600 bg-amber-50/70 shadow-xs ring-1 ring-amber-600'
@@ -326,9 +326,16 @@ export const ComplaintsView: React.FC = () => {
 
           {/* Timeline & Details */}
           {activeIncident && (
-            <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-6">
+            <div className={`lg:col-span-7 bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-6 ${!showMobileDetail ? 'hidden lg:block' : 'block animate-in slide-in-from-right-4'}`}>
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-4 border-b border-slate-200">
                 <div>
+                  <button 
+                    onClick={() => setShowMobileDetail(false)}
+                    className="lg:hidden mb-4 flex items-center gap-1 text-slate-500 hover:text-slate-900 font-semibold text-xs bg-slate-100 px-3 py-1.5 rounded-lg w-fit"
+                  >
+                    <ChevronRight className="w-4 h-4 rotate-180" />
+                    Back to List
+                  </button>
                   <span className="text-xs font-mono font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
                     {activeIncident.referenceNumber}
                   </span>

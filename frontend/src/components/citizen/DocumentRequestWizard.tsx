@@ -129,7 +129,7 @@ export const DocumentRequestWizard: React.FC<DocumentRequestWizardProps> = ({ in
               Step 1: Select Document to Request
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              Choose the official certificate you need from Barangay San Jose.
+              Choose the official certificate you need from Barangay 4A.
             </p>
           </div>
 
@@ -194,7 +194,7 @@ export const DocumentRequestWizard: React.FC<DocumentRequestWizardProps> = ({ in
               Step 2: Applicant & Residency Confirmation
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              Verify your information as it appears in the Barangay San Jose resident registry.
+              Verify your information as it appears in the Barangay 4A resident registry.
             </p>
           </div>
 
@@ -225,7 +225,7 @@ export const DocumentRequestWizard: React.FC<DocumentRequestWizardProps> = ({ in
 
             <div className="sm:col-span-2">
               <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                Purok / Area in Barangay San Jose
+                Purok / Area in Barangay 4A
               </label>
               <select
                 value={purok}
