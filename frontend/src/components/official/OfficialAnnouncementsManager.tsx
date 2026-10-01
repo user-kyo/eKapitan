@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 
 export const OfficialAnnouncementsManager: React.FC = () => {
-  const { announcements, createAnnouncement, largeTextMode } = useBarangay();
+  const { announcements, createAnnouncement, largeTextMode, currentRole } = useBarangay();
 
   const [showAddModal, setShowAddModal] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
@@ -56,13 +56,15 @@ export const OfficialAnnouncementsManager: React.FC = () => {
           </p>
         </div>
 
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-xs sm:text-sm shadow-xs transition-all flex items-center gap-2 cursor-pointer shrink-0"
-        >
-          <PlusCircle className="w-4 h-4" />
-          <span>Publish Advisory</span>
-        </button>
+        {(currentRole === 'official' || currentRole === 'staff') && (
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-xs sm:text-sm shadow-xs transition-all flex items-center gap-2 cursor-pointer shrink-0"
+          >
+            <PlusCircle className="w-4 h-4" />
+            <span>Publish Advisory</span>
+          </button>
+        )}
       </div>
 
       {/* Announcements Stream */}

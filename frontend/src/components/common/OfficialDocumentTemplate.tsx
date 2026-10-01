@@ -102,10 +102,10 @@ export const OfficialDocumentTemplate: React.FC<OfficialDocumentTemplateProps> =
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/70 backdrop-blur-xs overflow-y-auto">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full border border-slate-200 overflow-hidden my-auto animate-in zoom-in-95">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/70 backdrop-blur-xs overflow-y-auto print:static print:block print:p-0 print:bg-transparent print:backdrop-blur-none">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full border border-slate-200 overflow-hidden my-auto animate-in zoom-in-95 print:block print:max-w-none print:w-full print:border-none print:shadow-none print:rounded-none print:m-0 print:animate-none">
         {/* Top Control Bar (Hidden on print) */}
-        <div className="no-print bg-slate-900 text-white px-5 py-3 flex items-center justify-between">
+        <div className="print:hidden bg-slate-900 text-white px-5 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-emerald-400" />
             <span className="font-semibold text-sm">Official Barangay Issued Document Viewer</span>
@@ -144,14 +144,14 @@ export const OfficialDocumentTemplate: React.FC<OfficialDocumentTemplateProps> =
             <div className="flex items-center justify-between mb-2">
               {/* San Pablo City Seal Placeholder */}
               <div className="w-16 h-16 rounded-full border-2 border-slate-800 flex items-center justify-center bg-slate-50 shrink-0">
-                <span className="text-[10px] font-bold text-center leading-tight">PASIG<br/>CITY</span>
+                <span className="text-[10px] font-bold text-center leading-tight">SAN<br/>PABLO</span>
               </div>
 
               <div className="flex-1 px-4">
                 <p className="text-xs font-medium tracking-wider text-slate-600 uppercase">Republic of the Philippines</p>
-                <p className="text-xs font-medium text-slate-600">National Capital Region • City of Pasig</p>
+                <p className="text-xs font-medium text-slate-600">Province of Laguna • City of San Pablo</p>
                 <h2 className="text-xl sm:text-2xl font-black text-slate-900 font-heading tracking-tight mt-0.5">
-                  BARANGAY SAN JOSE
+                  BARANGAY 4A
                 </h2>
                 <p className="text-xs font-semibold text-slate-700 uppercase tracking-widest mt-0.5">
                   Office of the Punong Barangay
@@ -163,7 +163,7 @@ export const OfficialDocumentTemplate: React.FC<OfficialDocumentTemplateProps> =
 
               {/* Barangay 4A Seal */}
               <div className="w-16 h-16 rounded-full border-2 border-emerald-800 bg-emerald-50 text-emerald-900 flex items-center justify-center font-bold text-xs shrink-0">
-                <span className="text-[10px] font-extrabold text-center leading-tight">BRGY<br/>SAN JOSE</span>
+                <span className="text-[10px] font-extrabold text-center leading-tight">BRGY<br/>4A</span>
               </div>
             </div>
           </div>

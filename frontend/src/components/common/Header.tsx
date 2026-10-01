@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useBarangay } from '../../context/BarangayContext';
 import { UserRole } from '../../types';
 import { 
@@ -58,6 +59,13 @@ export const Header: React.FC = () => {
     { id: 'officials_directory', label: 'Officials Directory' },
   ];
 
+  const guestTabs = [
+    { id: 'complaints', label: 'Report Incident' },
+    { id: 'qr_verify', label: 'Verify Document' },
+    { id: 'announcements', label: 'Advisories' },
+    { id: 'officials_directory', label: 'Officials Directory' },
+  ];
+
   const staffTabs = [
     { id: 'dashboard', label: 'Operations Desk' },
     { id: 'staff_documents', label: 'Document Queue' },
@@ -77,11 +85,12 @@ export const Header: React.FC = () => {
   ];
 
   const currentTabs = 
+    currentRole === 'guest' ? guestTabs :
     currentRole === 'citizen' ? citizenTabs :
     currentRole === 'staff' ? staffTabs : officialTabs;
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
+    <header className="print:hidden sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
       {/* Top Civic Utility Bar */}
       <div className="bg-slate-900 text-slate-200 text-xs px-4 py-1.5 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-3">
@@ -158,6 +167,18 @@ export const Header: React.FC = () => {
               Preview Role:
             </span>
             <button
+              onClick={() => handleRoleSelect('guest')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                currentRole === 'guest'
+                  ? 'bg-amber-600 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+              }`}
+              id="role-guest-btn"
+            >
+              <User className="w-3.5 h-3.5" />
+              <span>Guest</span>
+            </button>
+            <button
               onClick={() => handleRoleSelect('citizen')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 currentRole === 'citizen'
@@ -206,7 +227,12 @@ export const Header: React.FC = () => {
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Quick QR Verify button */}
             <button
-              onClick={() => setActiveTab('qr_verify')}
+              onClick={() => {
+                if (currentRole !== 'citizen' && currentRole !== 'guest') {
+                  switchUserRole('guest');
+                }
+                setActiveTab('qr_verify');
+              }}
               className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 transition-colors cursor-pointer"
               title="Verify an issued Barangay Document QR Code"
               id="verify-document-nav-btn"
@@ -369,7 +395,15 @@ export const Header: React.FC = () => {
         <div className="lg:hidden absolute top-full left-0 w-full border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-4 shadow-xl animate-in fade-in slide-in-from-top-2">
           <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
             <span className="text-xs font-bold text-slate-700 block mb-2">Switch Active View:</span>
-            <div className="grid grid-cols-3 gap-1.5">
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                onClick={() => handleRoleSelect('guest')}
+                className={`py-2 px-1 text-center rounded-lg text-xs font-bold ${
+                  currentRole === 'guest' ? 'bg-amber-600 text-white' : 'bg-white text-slate-700 border border-slate-200'
+                }`}
+              >
+                Guest
+              </button>
               <button
                 onClick={() => handleRoleSelect('citizen')}
                 className={`py-2 px-1 text-center rounded-lg text-xs font-bold ${
@@ -407,7 +441,9 @@ export const Header: React.FC = () => {
                   onClick={() => { setActiveTab(tab.id); setMobileMenuOpen(false); }}
                   className={`px-3 py-2.5 rounded-lg text-sm font-semibold text-left transition-colors ${
                     isActive
-                      ? currentRole === 'citizen'
+                      ? currentRole === 'guest'
+                        ? 'bg-amber-700 text-white'
+                        : currentRole === 'citizen'
                         ? 'bg-emerald-700 text-white'
                         : currentRole === 'staff'
                         ? 'bg-blue-700 text-white'
@@ -424,8 +460,8 @@ export const Header: React.FC = () => {
       )}
 
       {/* Emergency Hotlines Modal */}
-      {hotlineModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in">
+      {hotlineModalOpen && createPortal(
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in" style={{ position: 'fixed' }}>
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2 text-rose-600 font-bold text-lg font-heading">
@@ -483,7 +519,8 @@ export const Header: React.FC = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </header>
   );

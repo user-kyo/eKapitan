@@ -1,4 +1,4 @@
-export type UserRole = 'citizen' | 'staff' | 'official';
+export type UserRole = 'citizen' | 'guest' | 'staff' | 'official';
 
 export interface UserProfile {
   id: string;
@@ -18,7 +18,7 @@ export interface Official {
   position: string;
   committee: string;
   contactDetails: string;
-  isActive: boolean;
+  status: 'Active (Incumbent)' | 'Inactive (Former)' | 'Suspended' | 'On Leave (Absent)';
   avatarUrl?: string;
 }
 

@@ -132,7 +132,7 @@ const ROLE_PROFILES: Record<UserRole, UserProfile> = {
     name: 'Elena Ramos',
     role: 'staff',
     roleTitle: 'Barangay Desk Officer & Records Custodian',
-    email: 'elena.records@barangaysanjose.gov.ph',
+    email: 'elena.records@brgy4a.gov.ph',
     avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80'
   },
   official: {
@@ -140,8 +140,15 @@ const ROLE_PROFILES: Record<UserRole, UserProfile> = {
     name: 'Hon. Roberto V. Gomez',
     role: 'official',
     roleTitle: 'Punong Barangay / Chief Administrator',
-    email: 'captain.gomez@barangaysanjose.gov.ph',
+    email: 'captain.gomez@brgy4a.gov.ph',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'
+  },
+  guest: {
+    id: 'user-guest',
+    name: 'Public Guest',
+    role: 'guest',
+    roleTitle: 'Unregistered Guest / Non-Resident',
+    email: 'guest@public.web'
   }
 };
 
@@ -219,6 +226,8 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     // Set natural starting tab
     if (role === 'citizen') {
       setActiveTab('home');
+    } else if (role === 'guest') {
+      setActiveTab('announcements');
     } else if (role === 'staff') {
       setActiveTab('dashboard');
     } else {

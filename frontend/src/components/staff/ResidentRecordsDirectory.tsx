@@ -8,7 +8,11 @@ import {
   CheckCircle2, 
   MapPin, 
   HeartHandshake, 
-  FileText
+  FileText,
+  AlertTriangle,
+  X,
+  Edit,
+  Save
 } from 'lucide-react';
 
 export const ResidentRecordsDirectory: React.FC = () => {
@@ -23,6 +27,13 @@ export const ResidentRecordsDirectory: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filterPurok, setFilterPurok] = useState<string>('All');
   const [filterSpecial, setFilterSpecial] = useState<string>('All'); // All, Senior, PWD, Voter
+  
+  // Duplicate Flags
+  const [showDuplicates, setShowDuplicates] = useState<boolean>(true);
+  const [showDuplicateModal, setShowDuplicateModal] = useState<boolean>(false);
+  
+  // Edit State
+  const [isEditingActiveResident, setIsEditingActiveResident] = useState<boolean>(false);
 
   // Modal
   const [showAddModal, setShowAddModal] = useState<boolean>(false);
@@ -123,6 +134,33 @@ export const ResidentRecordsDirectory: React.FC = () => {
         </div>
       </div>
 
+      {/* Duplicate Alert Banner */}
+      {showDuplicates && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 sm:p-5 flex items-start gap-3 shadow-xs">
+          <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <h4 className="text-sm font-bold text-amber-900">System Alert: Potential Duplicate Records Detected</h4>
+            <p className="text-xs sm:text-sm text-amber-700 mt-1 leading-relaxed">
+              The AI profile-matching algorithm has flagged <strong>1</strong> potential duplicate entry (Name Similarity: 92%, Birth Date Match: 100%, Same Address).
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button 
+                onClick={() => setShowDuplicateModal(true)} 
+                className="px-4 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-lg transition-colors cursor-pointer"
+              >
+                Review Duplicates
+              </button>
+              <button 
+                onClick={() => setShowDuplicates(false)} 
+                className="px-4 py-1.5 bg-white text-amber-700 border border-amber-300 text-xs font-bold rounded-lg hover:bg-amber-100 transition-colors cursor-pointer"
+              >
+                Mark as False Positive
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Filters & Search */}
       <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs flex flex-col md:flex-row gap-3 items-center justify-between">
         {/* Search */}
@@ -176,7 +214,10 @@ export const ResidentRecordsDirectory: React.FC = () => {
             return (
               <div
                 key={res.id}
-                onClick={() => setSelectedResidentId(res.id)}
+                onClick={() => {
+                  setSelectedResidentId(res.id);
+                  setIsEditingActiveResident(false);
+                }}
                 className={`p-4 rounded-xl border transition-all cursor-pointer ${
                   isSelected
                     ? 'border-purple-600 bg-purple-50/70 shadow-xs ring-1 ring-purple-600'
@@ -237,20 +278,51 @@ export const ResidentRecordsDirectory: React.FC = () => {
                       Verified Resident
                     </span>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 font-heading mt-0.5">
-                    {activeResident.firstName} {activeResident.middleName || ''} {activeResident.lastName}
-                  </h3>
-                  <p className="text-xs text-slate-500">
-                    {activeResident.occupation} • {activeResident.civilStatus}
-                  </p>
+                  {isEditingActiveResident ? (
+                    <div className="mt-1 flex gap-2">
+                      <input type="text" className="bg-white border border-slate-300 rounded px-2 py-1 text-sm font-bold text-slate-900 w-24" defaultValue={activeResident.firstName} />
+                      <input type="text" className="bg-white border border-slate-300 rounded px-2 py-1 text-sm font-bold text-slate-900 w-24" defaultValue={activeResident.lastName} />
+                    </div>
+                  ) : (
+                    <h3 className="text-xl font-bold text-slate-900 font-heading mt-0.5">
+                      {activeResident.firstName} {activeResident.middleName || ''} {activeResident.lastName}
+                    </h3>
+                  )}
+                  {isEditingActiveResident ? (
+                    <input type="text" className="bg-white border border-slate-300 rounded px-2 py-1 mt-1 text-xs text-slate-500 w-full" defaultValue={activeResident.occupation} />
+                  ) : (
+                    <p className="text-xs text-slate-500">
+                      {activeResident.occupation} • {activeResident.civilStatus}
+                    </p>
+                  )}
                 </div>
               </div>
 
-              <div className="text-left sm:text-right">
-                <span className="text-[10px] uppercase font-bold text-slate-400 block">Household Assignment</span>
-                <span className="text-xs font-bold text-slate-900 font-mono">{activeResident.householdId}</span>
-                {activeResident.isHouseholdHead && (
-                  <span className="text-[10px] font-bold text-emerald-700 block">Head of Household</span>
+              <div className="text-left sm:text-right flex flex-col sm:items-end justify-between h-full">
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-slate-400 block">Household Assignment</span>
+                  <span className="text-xs font-bold text-slate-900 font-mono">{activeResident.householdId}</span>
+                  {activeResident.isHouseholdHead && (
+                    <span className="text-[10px] font-bold text-emerald-700 block">Head of Household</span>
+                  )}
+                </div>
+                
+                {isEditingActiveResident ? (
+                  <button 
+                    onClick={() => setIsEditingActiveResident(false)} 
+                    className="mt-3 px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold rounded-lg transition-colors flex items-center gap-1.5"
+                  >
+                    <Save className="w-3 h-3" />
+                    Save Changes
+                  </button>
+                ) : (
+                  <button 
+                    onClick={() => setIsEditingActiveResident(true)} 
+                    className="mt-3 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition-colors flex items-center gap-1.5"
+                  >
+                    <Edit className="w-3 h-3" />
+                    Edit Record
+                  </button>
                 )}
               </div>
             </div>
@@ -259,7 +331,14 @@ export const ResidentRecordsDirectory: React.FC = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
               <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
                 <span className="text-slate-400 block text-[10px] uppercase font-bold">Gender</span>
-                <span className="font-bold text-slate-900 mt-0.5 block">{activeResident.gender}</span>
+                {isEditingActiveResident ? (
+                  <select className="w-full bg-white border border-slate-300 rounded px-2 py-1 mt-1 text-xs font-semibold text-slate-900" defaultValue={activeResident.gender}>
+                    <option>Male</option>
+                    <option>Female</option>
+                  </select>
+                ) : (
+                  <span className="font-bold text-slate-900 mt-0.5 block">{activeResident.gender}</span>
+                )}
               </div>
               <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
                 <span className="text-slate-400 block text-[10px] uppercase font-bold">Birthdate</span>
@@ -267,11 +346,26 @@ export const ResidentRecordsDirectory: React.FC = () => {
               </div>
               <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
                 <span className="text-slate-400 block text-[10px] uppercase font-bold">Residency Area</span>
-                <span className="font-semibold text-slate-800 mt-0.5 block">{activeResident.purok}</span>
+                {isEditingActiveResident ? (
+                  <select className="w-full bg-white border border-slate-300 rounded px-2 py-1 mt-1 text-xs font-semibold text-slate-800" defaultValue={activeResident.purok}>
+                    <option>Purok 1 - Centro</option>
+                    <option>Purok 2 - Riverside</option>
+                    <option>Purok 3 - Bukidnon</option>
+                    <option>Purok 4 - Pag-asa</option>
+                    <option>Purok 5 - San Roque</option>
+                    <option>Purok 6 - Industrial</option>
+                  </select>
+                ) : (
+                  <span className="font-semibold text-slate-800 mt-0.5 block">{activeResident.purok}</span>
+                )}
               </div>
               <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
                 <span className="text-slate-400 block text-[10px] uppercase font-bold">Contact Number</span>
-                <span className="font-semibold text-slate-800 mt-0.5 block">{activeResident.contactNumber}</span>
+                {isEditingActiveResident ? (
+                  <input type="text" className="w-full bg-white border border-slate-300 rounded px-2 py-1 mt-1 text-xs font-semibold text-slate-800" defaultValue={activeResident.contactNumber} />
+                ) : (
+                  <span className="font-semibold text-slate-800 mt-0.5 block">{activeResident.contactNumber}</span>
+                )}
               </div>
               <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
                 <span className="text-slate-400 block text-[10px] uppercase font-bold">COMELEC Voter</span>
@@ -482,6 +576,118 @@ export const ResidentRecordsDirectory: React.FC = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Duplicate Review Modal */}
+      {showDuplicateModal && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl animate-in zoom-in-95 duration-200">
+            <div className="p-5 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white z-10">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center">
+                  <AlertTriangle className="w-4 h-4 text-amber-600" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-slate-900 font-heading">Resolve Duplicate Records</h3>
+                  <p className="text-xs text-slate-500">The Jaro-Winkler algorithm detected similar entries.</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => setShowDuplicateModal(false)}
+                className="p-2 hover:bg-slate-100 rounded-full text-slate-400 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-5 bg-slate-50">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Record A */}
+                <div className="bg-white border-2 border-emerald-500 rounded-xl p-4 shadow-sm relative">
+                  <div className="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg rounded-tr-xl">
+                    RECOMMENDED ACTIVE
+                  </div>
+                  <h4 className="font-bold text-slate-900 text-sm mb-3">Record A (Existing)</h4>
+                  <div className="space-y-2 text-xs">
+                    <div className="grid grid-cols-3 border-b border-slate-50 pb-1">
+                      <span className="text-slate-500 font-semibold">Name</span>
+                      <span className="col-span-2 font-bold text-slate-900">Juan D. Dela Cruz</span>
+                    </div>
+                    <div className="grid grid-cols-3 border-b border-slate-50 pb-1">
+                      <span className="text-slate-500 font-semibold">Birth Date</span>
+                      <span className="col-span-2 text-slate-700">1985-04-12</span>
+                    </div>
+                    <div className="grid grid-cols-3 border-b border-slate-50 pb-1">
+                      <span className="text-slate-500 font-semibold">Purok</span>
+                      <span className="col-span-2 text-slate-700">Purok 1 - Centro</span>
+                    </div>
+                    <div className="grid grid-cols-3 border-b border-slate-50 pb-1">
+                      <span className="text-slate-500 font-semibold">Contact</span>
+                      <span className="col-span-2 text-slate-700">0917-555-0001</span>
+                    </div>
+                    <div className="grid grid-cols-3">
+                      <span className="text-slate-500 font-semibold">ID Ref</span>
+                      <span className="col-span-2 text-slate-700 font-mono">RES-2023-0042</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Record B */}
+                <div className="bg-white border-2 border-amber-300 rounded-xl p-4 shadow-sm relative opacity-90">
+                  <div className="absolute top-0 right-0 bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-1 rounded-bl-lg rounded-tr-xl">
+                    FLAGGED DUPLICATE
+                  </div>
+                  <h4 className="font-bold text-slate-900 text-sm mb-3">Record B (New Entry)</h4>
+                  <div className="space-y-2 text-xs">
+                    <div className="grid grid-cols-3 border-b border-slate-50 pb-1">
+                      <span className="text-slate-500 font-semibold">Name</span>
+                      <span className="col-span-2 font-bold text-slate-900 bg-amber-50">Juanito Dela Cruz</span>
+                    </div>
+                    <div className="grid grid-cols-3 border-b border-slate-50 pb-1">
+                      <span className="text-slate-500 font-semibold">Birth Date</span>
+                      <span className="col-span-2 text-slate-700">1985-04-12</span>
+                    </div>
+                    <div className="grid grid-cols-3 border-b border-slate-50 pb-1">
+                      <span className="text-slate-500 font-semibold">Purok</span>
+                      <span className="col-span-2 text-slate-700">Purok 1 - Centro</span>
+                    </div>
+                    <div className="grid grid-cols-3 border-b border-slate-50 pb-1">
+                      <span className="text-slate-500 font-semibold">Contact</span>
+                      <span className="col-span-2 text-slate-700">None</span>
+                    </div>
+                    <div className="grid grid-cols-3">
+                      <span className="text-slate-500 font-semibold">ID Ref</span>
+                      <span className="col-span-2 text-slate-700 font-mono">RES-2026-0891</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-4 p-3 rounded-lg bg-blue-50 border border-blue-100 text-xs text-blue-800">
+                <strong>AI Analysis:</strong> 92% Name Similarity. Identical birth date and purok. Highly likely to be the same individual re-registered by a family member.
+              </div>
+            </div>
+
+            <div className="p-4 border-t border-slate-100 flex justify-end gap-3 bg-white">
+              <button
+                onClick={() => setShowDuplicateModal(false)}
+                className="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  alert('Record B archived. Record A retained as the active master record.');
+                  setShowDuplicateModal(false);
+                  setShowDuplicates(false);
+                }}
+                className="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs shadow-xs transition-colors"
+              >
+                Merge & Archive Record B
+              </button>
+            </div>
           </div>
         </div>
       )}
