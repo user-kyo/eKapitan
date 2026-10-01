@@ -90,7 +90,7 @@ export const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 gap-4">
           {/* Brand Logo & Barangay Name */}
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => {
+          <div className="flex items-center gap-3 cursor-pointer min-w-0" onClick={() => {
             if (currentRole === 'citizen') setActiveTab('home');
             else if (currentRole === 'staff') setActiveTab('dashboard');
             else setActiveTab('executive_dashboard');
@@ -103,16 +103,16 @@ export const Header: React.FC = () => {
               </span>
             </div>
             
-            <div>
+            <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 font-heading">
+                <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 font-heading whitespace-nowrap">
                   e-Kapitan
                 </span>
-                <span className="hidden sm:inline-block bg-emerald-100 text-emerald-800 text-[11px] font-semibold px-2 py-0.5 rounded-full border border-emerald-200">
+                <span className="hidden sm:inline-block bg-emerald-100 text-emerald-800 text-[11px] font-semibold px-2 py-0.5 rounded-full border border-emerald-200 whitespace-nowrap">
                   Barangay San Jose
                 </span>
               </div>
-              <p className="text-xs text-slate-500 hidden sm:block">
+              <p className="text-xs text-slate-500 hidden md:block truncate">
                 Citizen Service & Digital Local Governance Portal
               </p>
             </div>
