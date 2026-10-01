@@ -13,7 +13,9 @@ import {
   Calendar, 
   ArrowUpRight,
   CheckCircle2,
-  Printer
+  Printer,
+  Download,
+  RefreshCw
 } from 'lucide-react';
 
 export const ExecutiveDashboard: React.FC = () => {
@@ -263,6 +265,39 @@ export const ExecutiveDashboard: React.FC = () => {
             <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
             <span>Anti-Red Tape Act (ARTA) Compliance: <strong>100% compliant with zero overdue transactions.</strong></span>
           </div>
+        </div>
+      </div>
+
+      {/* System Backup & Recovery Mock */}
+      <div className="bg-slate-900 rounded-2xl border border-slate-700 p-6 shadow-xl flex flex-col md:flex-row gap-6 items-center justify-between text-white mt-8">
+        <div>
+          <div className="flex items-center gap-2 text-indigo-400 text-xs font-bold uppercase tracking-wider mb-1">
+            <ShieldCheck className="w-4 h-4" />
+            <span>Disaster Recovery System</span>
+          </div>
+          <h3 className="text-lg font-bold font-heading mb-1">
+            System Backup & Integrity
+          </h3>
+          <p className="text-xs sm:text-sm text-slate-400">
+            Secure offline backups of the Barangay Civil Masterlist and official records. Compliant with LGU data continuity policies.
+          </p>
+        </div>
+        
+        <div className="flex gap-3 w-full md:w-auto">
+          <button 
+            onClick={() => alert("Creating encrypted system backup... Complete.")}
+            className="flex-1 md:flex-none px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 rounded-xl text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center justify-center gap-2"
+          >
+            <Download className="w-4 h-4" />
+            Create Backup
+          </button>
+          <button 
+            onClick={() => alert("Restoring system from latest backup point... Complete.")}
+            className="flex-1 md:flex-none px-4 py-2.5 bg-transparent border border-slate-600 hover:bg-slate-800 rounded-xl text-xs sm:text-sm font-bold transition-colors flex items-center justify-center gap-2 text-slate-300"
+          >
+            <RefreshCw className="w-4 h-4" />
+            Restore Point
+          </button>
         </div>
       </div>
     </div>

@@ -16,6 +16,7 @@ import {
 
 export const DocumentVerification: React.FC = () => {
   const { verifyDocumentByCode, setSelectedDocumentForPrint, largeTextMode } = useBarangay();
+  const { verifyDocumentCode, setSelectedDocumentForPrint, largeTextMode } = useBarangay();
   const [inputCode, setInputCode] = useState<string>('VER-B4A-78921-99');
   const [searched, setSearched] = useState<boolean>(false);
   const [verifiedDoc, setVerifiedDoc] = useState<any | null>(null);
@@ -24,8 +25,8 @@ export const DocumentVerification: React.FC = () => {
     e.preventDefault();
     if (!inputCode.trim()) return;
 
-    const result = verifyDocumentByCode(inputCode.trim());
-    setVerifiedDoc(result || null);
+    const result = verifyDocumentCode(inputCode.trim());
+    setVerifiedDoc(result.document || null);
     setSearched(true);
   };
 
@@ -45,6 +46,29 @@ export const DocumentVerification: React.FC = () => {
         <div className="relative z-10">
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center mx-auto mb-6 shadow-lg shadow-indigo-500/20">
             <ShieldCheck className="w-8 h-8" />
+      <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs text-center">
+        <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center mx-auto mb-3 border border-indigo-200">
+          <ShieldCheck className="w-6 h-6" />
+        </div>
+        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 font-heading">
+          Official Document Authenticity Verifier
+        </h2>
+        <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-lg mx-auto">
+          Verify documents issued by Barangay 4A, San Pablo City, Laguna. External organizations (banks, employers, schools) can validate clearance credentials in real-time.
+        </p>
+
+        {/* Verification Form */}
+        <form onSubmit={handleVerify} className="mt-6 max-w-lg mx-auto flex flex-col sm:flex-row gap-2">
+          <div className="relative flex-1">
+            <QrCode className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+            <input
+              type="text"
+              placeholder="Enter QR hash (e.g. VER-B4A-...) or Ref..."
+              value={inputCode}
+              onChange={(e) => setInputCode(e.target.value)}
+              className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:bg-white focus:outline-indigo-600 font-mono"
+              id="verification-code-input"
+            />
           </div>
           <h2 className="text-2xl sm:text-3xl font-black text-slate-900 font-heading tracking-tight mb-3">
             Document Authenticity Verifier
@@ -84,8 +108,8 @@ export const DocumentVerification: React.FC = () => {
               type="button"
               onClick={() => {
                 setInputCode(s.code);
-                const result = verifyDocumentByCode(s.code);
-                setVerifiedDoc(result || null);
+                const result = verifyDocumentCode(s.code);
+                setVerifiedDoc(result.document || null);
                 setSearched(true);
               }}
               className="px-3 py-1.5 bg-white hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-200 rounded-lg font-mono text-[11px] font-semibold text-slate-600 transition-colors border border-slate-200 cursor-pointer shadow-sm"
@@ -146,6 +170,7 @@ export const DocumentVerification: React.FC = () => {
                   </span>
                   <span className="font-semibold text-slate-900 mt-0.5 block">
                     {verifiedDoc.purok}, Barangay 4A, San Pablo City
+                    {verifiedDoc.purok}, Barangay 4A, San Pablo City, Laguna
                   </span>
                 </div>
 

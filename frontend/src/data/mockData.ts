@@ -10,8 +10,21 @@ import {
   AuditLog, 
   KnowledgeBaseItem, 
   PriorityCriteriaConfig,
-  DuplicateRecordFlag 
+  DuplicateRecordFlag,
+  Official
 } from '../types';
+
+export const INITIAL_OFFICIALS: Official[] = [
+  { id: 'off-1', name: 'Hon. Eduardo M. Reyes', position: 'Barangay Captain', committee: 'Executive / Presiding Officer', contactDetails: 'captain.reyes@barangay4a.gov.ph', status: 'Active (Incumbent)' },
+  { id: 'off-2', name: 'Hon. Maria T. Santos', position: 'Barangay Kagawad', committee: 'Committee on Health and Sanitation', contactDetails: 'kagawad.santos@barangay4a.gov.ph', status: 'Active (Incumbent)' },
+  { id: 'off-3', name: 'Hon. Jose P. Villanueva', position: 'Barangay Kagawad', committee: 'Committee on Peace and Order', contactDetails: 'kagawad.villanueva@barangay4a.gov.ph', status: 'Active (Incumbent)' },
+  { id: 'off-4', name: 'Hon. Analyn B. Garcia', position: 'Barangay Kagawad', committee: 'Committee on Education', contactDetails: 'kagawad.garcia@barangay4a.gov.ph', status: 'Active (Incumbent)' },
+  { id: 'off-5', name: 'Hon. Ricardo S. Lim', position: 'Barangay Kagawad', committee: 'Committee on Public Works', contactDetails: 'kagawad.lim@barangay4a.gov.ph', status: 'Active (Incumbent)' },
+  { id: 'off-6', name: 'Hon. Elena F. Cruz', position: 'Barangay Kagawad', committee: 'Committee on Women and Family', contactDetails: 'kagawad.cruz@barangay4a.gov.ph', status: 'Active (Incumbent)' },
+  { id: 'off-7', name: 'Hon. Mark L. Bautista', position: 'Barangay Kagawad', committee: 'Committee on Sports and Youth', contactDetails: 'kagawad.bautista@barangay4a.gov.ph', status: 'On Leave (Absent)' },
+  { id: 'off-8', name: 'Hon. Patricia D. Mendoza', position: 'SK Chairperson', committee: 'Sangguniang Kabataan', contactDetails: 'sk.mendoza@barangay4a.gov.ph', status: 'Active (Incumbent)' },
+  { id: 'off-9', name: 'Juan Carlos T. Ramos', position: 'Barangay Secretary', committee: 'Records and Administration', contactDetails: 'secretary.ramos@barangay4a.gov.ph', status: 'Active (Incumbent)' },
+];
 
 export const INITIAL_SERVICES: ServiceItem[] = [
   {

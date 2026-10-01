@@ -1,4 +1,5 @@
 export type UserRole = 'citizen' | 'staff' | 'official' | 'guest';
+export type UserRole = 'citizen' | 'guest' | 'staff' | 'official';
 
 export interface UserProfile {
   id: string;
@@ -11,6 +12,16 @@ export interface UserProfile {
 }
 
 export type ResidentStatus = 'active' | 'archived' | 'deceased' | 'transferred';
+
+export interface Official {
+  id: string;
+  name: string;
+  position: string;
+  committee: string;
+  contactDetails: string;
+  status: 'Active (Incumbent)' | 'Inactive (Former)' | 'Suspended' | 'On Leave (Absent)';
+  avatarUrl?: string;
+}
 
 export interface Resident {
   id: string;
@@ -31,6 +42,7 @@ export interface Resident {
   occupation: string;
   isSenior: boolean;
   isPWD: boolean;
+  isIndigent?: boolean;
   isVoter: boolean;
   registeredDate: string;
   status: ResidentStatus;

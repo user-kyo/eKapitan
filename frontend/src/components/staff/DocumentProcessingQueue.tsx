@@ -21,7 +21,7 @@ import {
 export const DocumentProcessingQueue: React.FC = () => {
   const { 
     documentRequests, 
-    updateDocumentStatus, 
+    updateDocumentRequestStatus, 
     setSelectedDocumentForPrint, 
     largeTextMode 
   } = useBarangay();
@@ -47,13 +47,13 @@ export const DocumentProcessingQueue: React.FC = () => {
 
   const handleStatusChange = (status: RequestStatus) => {
     if (!activeRequest) return;
-    updateDocumentStatus(activeRequest.id, status, staffNotesInput.trim() || undefined);
+    updateDocumentRequestStatus(activeRequest.id, status, staffNotesInput.trim() || undefined);
     setStaffNotesInput('');
   };
 
   const handleConfirmReject = () => {
     if (!activeRequest || !rejectReason.trim()) return;
-    updateDocumentStatus(activeRequest.id, 'rejected', rejectReason.trim());
+    updateDocumentRequestStatus(activeRequest.id, 'rejected', rejectReason.trim());
     setShowRejectModal(false);
     setRejectReason('');
   };

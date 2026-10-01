@@ -30,6 +30,7 @@ export const AICitizenAssistant: React.FC = () => {
       id: 'msg-1',
       sender: 'assistant',
       text: "Mabuhay! Ako si **Ka-Barangay AI**, ang inyong digital citizen information assistant sa Barangay 4A, San Pablo City.\n\nAno po ang maaari kong maitulong tungkol sa mga dokumento (Clearance, Residency, Indigency), requirements, bayarin, o schedule ng barangay hall?",
+      text: "Mabuhay! Ako si **Ka-Barangay AI**, ang inyong digital citizen information assistant sa Barangay 4A, San Pablo City, Laguna.\n\nAno po ang maaari kong maitulong tungkol sa mga dokumento (Clearance, Residency, Indigency), requirements, bayarin, o schedule ng barangay hall?",
       time: 'Just now',
       source: 'knowledge-base'
     }
@@ -125,6 +126,7 @@ export const AICitizenAssistant: React.FC = () => {
               </span>
             </div>
             <p className="text-sm text-slate-500">
+            <p className="text-xs text-slate-500 mt-0.5">
               Friendly civic assistant for Barangay 4A services, requirements, and office schedules.
             </p>
           </div>

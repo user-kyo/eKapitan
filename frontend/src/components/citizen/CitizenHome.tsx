@@ -309,15 +309,15 @@ export const CitizenHome: React.FC = () => {
             <div className="space-y-3 mt-5">
               <div className="p-3 rounded-xl bg-white/10 border border-white/15">
                 <span className="text-[10px] uppercase text-emerald-300 font-bold block">Barangay Hall Direct</span>
-                <span className="text-sm font-black text-white">(02) 8642-1111</span>
+                <span className="text-sm font-black text-white">(049) 562-1111</span>
               </div>
               <div className="p-3 rounded-xl bg-white/10 border border-white/15">
                 <span className="text-[10px] uppercase text-amber-300 font-bold block">Tanod Patrol / Security</span>
-                <span className="text-sm font-black text-white">(02) 8642-2222</span>
+                <span className="text-sm font-black text-white">(049) 562-2222</span>
               </div>
               <div className="p-3 rounded-xl bg-white/10 border border-white/15">
                 <span className="text-[10px] uppercase text-blue-300 font-bold block">Health Center & Ambulance</span>
-                <span className="text-sm font-black text-white">(02) 8642-3333</span>
+                <span className="text-sm font-black text-white">(049) 562-3333</span>
               </div>
             </div>
           </div>

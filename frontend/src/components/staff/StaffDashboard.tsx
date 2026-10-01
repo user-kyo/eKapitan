@@ -63,7 +63,7 @@ export const StaffDashboard: React.FC<StaffDashboardProps> = ({ onOpenWalkInModa
         {/* Quick Operational Actions */}
         <div className="flex flex-wrap items-center gap-2">
           <button
-            onClick={() => callNextQueueTicket('Counter 1 (Clearances)')}
+            onClick={() => callNextQueueTicket(1)}
             className="px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-xs sm:text-sm shadow-xs transition-all flex items-center gap-2 cursor-pointer"
             id="call-next-ticket-quick-btn"
           >

@@ -43,9 +43,9 @@ export const DocumentRequestWizard: React.FC<DocumentRequestWizardProps> = ({ in
   const [appointmentDate, setAppointmentDate] = useState<string>('2026-09-11');
   const [appointmentTime, setAppointmentTime] = useState<string>('10:00 AM - 11:00 AM');
   
-  // Exemption
   const [claimExemption, setClaimExemption] = useState<boolean>(false);
   const [exemptionReason, setExemptionReason] = useState<string>('First-Time Jobseeker (RA 11261)');
+  const [privacyConsent, setPrivacyConsent] = useState<boolean>(false);
 
   // Uploaded requirements simulation
   const [requirementsState, setRequirementsState] = useState<{ name: string; submitted: boolean }[]>([
@@ -66,6 +66,11 @@ export const DocumentRequestWizard: React.FC<DocumentRequestWizardProps> = ({ in
   };
 
   const handleSubmit = () => {
+    if (!privacyConsent) {
+      alert('Please agree to the Data Privacy terms before submitting.');
+      return;
+    }
+
     createDocumentRequest({
       documentType: selectedDocType,
       documentTitle: currentService.title,
@@ -435,6 +440,20 @@ export const DocumentRequestWizard: React.FC<DocumentRequestWizardProps> = ({ in
             <span className="leading-relaxed">
               Upon submission, you will receive a unique tracking reference code. Barangay records officers will review your records immediately during official hours.
             </span>
+          </div>
+          
+          {/* Data Privacy Consent */}
+          <div className="mt-4 p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="docPrivacyConsent"
+              checked={privacyConsent}
+              onChange={(e) => setPrivacyConsent(e.target.checked)}
+              className="mt-1 w-4 h-4 text-emerald-600 rounded cursor-pointer"
+            />
+            <label htmlFor="docPrivacyConsent" className="text-[11px] text-slate-600 cursor-pointer">
+              I hereby consent to the collection and processing of my personal data for the purpose of this document request, in accordance with the Data Privacy Act of 2012. I understand that my information will only be accessed by authorized barangay personnel.
+            </label>
           </div>
         </div>
       )}

@@ -21,7 +21,8 @@ export const ComplaintsView: React.FC = () => {
     incidents, 
     createIncidentReport, 
     currentUser, 
-    largeTextMode 
+    largeTextMode,
+    currentRole
   } = useBarangay();
 
   const [activeTabSub, setActiveTabSub] = useState<'submit' | 'history'>('submit');
@@ -36,6 +37,7 @@ export const ComplaintsView: React.FC = () => {
     new Date().toISOString().substring(0, 16).replace('T', ' ')
   );
   const [isAnonymous, setIsAnonymous] = useState<boolean>(false);
+  const [privacyConsent, setPrivacyConsent] = useState<boolean>(false);
   const [searchRef, setSearchRef] = useState<string>('');
   const [selectedIncidentId, setSelectedIncidentId] = useState<string>(incidents[0]?.id || '');
   const [showMobileDetail, setShowMobileDetail] = useState<boolean>(false);
@@ -56,6 +58,10 @@ export const ComplaintsView: React.FC = () => {
       alert('Please fill out the title, description, and location of the incident.');
       return;
     }
+    if (!privacyConsent) {
+      alert('Please agree to the Data Privacy terms before submitting.');
+      return;
+    }
 
     const created = createIncidentReport({
       category,
@@ -74,7 +80,9 @@ export const ComplaintsView: React.FC = () => {
     setDescription('');
     setLocation('');
     setSelectedIncidentId(created.id);
-    setActiveTabSub('history');
+    if (currentRole !== 'guest') {
+      setActiveTabSub('history');
+    }
   };
 
   const filteredIncidents = incidents.filter((inc) => {
@@ -129,6 +137,18 @@ export const ComplaintsView: React.FC = () => {
           >
             Track Reports ({incidents.length})
           </button>
+          {currentRole !== 'guest' && (
+            <button
+              onClick={() => setActiveTabSub('history')}
+              className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                activeTabSub === 'history'
+                  ? 'bg-slate-900 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              Track Reports ({incidents.length})
+            </button>
+          )}
         </div>
       </div>
 
@@ -259,6 +279,21 @@ export const ComplaintsView: React.FC = () => {
                 onChange={(e) => setIsAnonymous(e.target.checked)}
                 className="w-4 h-4 text-emerald-600 rounded cursor-pointer"
               />
+            </div>
+
+            {/* Data Privacy Consent */}
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+              <input
+                type="checkbox"
+                id="privacyConsent"
+                checked={privacyConsent}
+                onChange={(e) => setPrivacyConsent(e.target.checked)}
+                className="mt-1 w-4 h-4 text-emerald-600 rounded cursor-pointer"
+                required
+              />
+              <label htmlFor="privacyConsent" className="text-[11px] text-slate-600 cursor-pointer">
+                I hereby consent to the collection and processing of my data for the purpose of investigating this incident, in accordance with the Data Privacy Act of 2012. I understand that my information is secure and role-restricted.
+              </label>
             </div>
 
             <button

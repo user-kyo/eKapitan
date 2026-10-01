@@ -36,6 +36,7 @@ export const OfficialDocumentTemplate: React.FC<OfficialDocumentTemplateProps> =
           <>
             <p className="indent-8 leading-relaxed mb-4 text-justify">
               This is to certify that <strong>{document.residentName}</strong>, of legal age, Filipino citizen, and a bonafide resident of <strong>{document.purok}</strong>, Barangay 4A, San Pablo City, is a person of good moral character and reputable standing in the community.
+              This is to certify that <strong>{document.residentName}</strong>, of legal age, Filipino citizen, and a bonafide resident of <strong>{document.purok}</strong>, Barangay 4A, San Pablo City, Laguna, is a person of good moral character and reputable standing in the community.
             </p>
             <p className="indent-8 leading-relaxed mb-4 text-justify">
               Records of this office further show that as of this date, the subject individual has <strong>NO DEROGATORY RECORD</strong> nor any pending criminal case, citation, or dispute filed before the Lupon Tagapamayapa of this barangay.
@@ -50,6 +51,7 @@ export const OfficialDocumentTemplate: React.FC<OfficialDocumentTemplateProps> =
           <>
             <p className="indent-8 leading-relaxed mb-4 text-justify">
               This is to certify that <strong>{document.residentName}</strong>, of legal age, is a documented resident residing at <strong>{document.purok}</strong>, Barangay 4A, San Pablo City, Metro Manila, having continuously resided in this jurisdiction for more than six (6) months.
+              This is to certify that <strong>{document.residentName}</strong>, of legal age, is a documented resident residing at <strong>{document.purok}</strong>, Barangay 4A, San Pablo City, Laguna, Metro Manila, having continuously resided in this jurisdiction for more than six (6) months.
             </p>
             <p className="indent-8 leading-relaxed text-justify">
               This certification is issued upon the request of the bearer for the purpose of: <strong>{document.purpose || 'School enrollment, postal ID, and general identification'}</strong>.
@@ -61,6 +63,7 @@ export const OfficialDocumentTemplate: React.FC<OfficialDocumentTemplateProps> =
           <>
             <p className="indent-8 leading-relaxed mb-4 text-justify">
               This is to certify that <strong>{document.residentName}</strong>, residing at <strong>{document.purok}</strong>, Barangay 4A, San Pablo City, belongs to an indigent family residing in this barangay, with monthly household earnings falling within the low-income threshold.
+              This is to certify that <strong>{document.residentName}</strong>, residing at <strong>{document.purok}</strong>, Barangay 4A, San Pablo City, Laguna, belongs to an indigent family residing in this barangay, with monthly household earnings falling within the low-income threshold.
             </p>
             <p className="indent-8 leading-relaxed mb-4 text-justify">
               Pursuant to government social welfare guidelines and local ordinances, all local processing fees for this document have been <strong>WAIVED (100% FREE OF CHARGE)</strong>.
@@ -96,16 +99,17 @@ export const OfficialDocumentTemplate: React.FC<OfficialDocumentTemplateProps> =
         return (
           <p className="indent-8 leading-relaxed text-justify">
             This certifies that <strong>{document.residentName}</strong> is an active resident of <strong>{document.purok}</strong>, Barangay 4A, San Pablo City, and that this document is issued for: <strong>{document.purpose}</strong>.
+            This certifies that <strong>{document.residentName}</strong> is an active resident of <strong>{document.purok}</strong>, Barangay 4A, San Pablo City, Laguna, and that this document is issued for: <strong>{document.purpose}</strong>.
           </p>
         );
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/70 backdrop-blur-xs overflow-y-auto">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full border border-slate-200 overflow-hidden my-auto animate-in zoom-in-95">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/70 backdrop-blur-xs overflow-y-auto print:static print:block print:p-0 print:bg-transparent print:backdrop-blur-none">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full border border-slate-200 overflow-hidden my-auto animate-in zoom-in-95 print:block print:max-w-none print:w-full print:border-none print:shadow-none print:rounded-none print:m-0 print:animate-none">
         {/* Top Control Bar (Hidden on print) */}
-        <div className="no-print bg-slate-900 text-white px-5 py-3 flex items-center justify-between">
+        <div className="print:hidden bg-slate-900 text-white px-5 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-emerald-400" />
             <span className="font-semibold text-sm">Official Barangay Issued Document Viewer</span>
@@ -144,7 +148,7 @@ export const OfficialDocumentTemplate: React.FC<OfficialDocumentTemplateProps> =
             <div className="flex items-center justify-between mb-2">
               {/* San Pablo City Seal Placeholder */}
               <div className="w-16 h-16 rounded-full border-2 border-slate-800 flex items-center justify-center bg-slate-50 shrink-0">
-                <span className="text-[10px] font-bold text-center leading-tight">PASIG<br/>CITY</span>
+                <span className="text-[10px] font-bold text-center leading-tight">SAN<br/>PABLO</span>
               </div>
 
               <div className="flex-1 px-4">
@@ -152,6 +156,9 @@ export const OfficialDocumentTemplate: React.FC<OfficialDocumentTemplateProps> =
                 <p className="text-xs font-medium text-slate-600">National Capital Region • San Pablo City</p>
                 <h2 className="text-xl sm:text-2xl font-black text-slate-900 font-heading tracking-tight mt-0.5">
                   Barangay 4A
+                <p className="text-xs font-medium text-slate-600">Province of Laguna • City of San Pablo</p>
+                <h2 className="text-xl sm:text-2xl font-black text-slate-900 font-heading tracking-tight mt-0.5">
+                  BARANGAY 4A
                 </h2>
                 <p className="text-xs font-semibold text-slate-700 uppercase tracking-widest mt-0.5">
                   Office of the Punong Barangay
