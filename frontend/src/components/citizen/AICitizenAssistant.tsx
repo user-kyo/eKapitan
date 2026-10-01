@@ -29,7 +29,7 @@ export const AICitizenAssistant: React.FC = () => {
     {
       id: 'msg-1',
       sender: 'assistant',
-      text: "Mabuhay! Ako si **Ka-Barangay AI**, ang inyong digital citizen information assistant sa Barangay San Jose, Pasig City.\n\nAno po ang maaari kong maitulong tungkol sa mga dokumento (Clearance, Residency, Indigency), requirements, bayarin, o schedule ng barangay hall?",
+      text: "Mabuhay! Ako si **Ka-Barangay AI**, ang inyong digital citizen information assistant sa Barangay 4A, San Pablo City, Laguna.\n\nAno po ang maaari kong maitulong tungkol sa mga dokumento (Clearance, Residency, Indigency), requirements, bayarin, o schedule ng barangay hall?",
       time: 'Just now',
       source: 'knowledge-base'
     }
@@ -98,7 +98,7 @@ export const AICitizenAssistant: React.FC = () => {
       const botMsg: ChatMessage = {
         id: 'bot-' + Date.now(),
         sender: 'assistant',
-        text: "📄 **Gabay sa Serbisyo ng Barangay San Jose:**\n\n• **Barangay Clearance:** ₱50.00 (Libre para sa First-Time Jobseekers RA 11261). Dalhin ang Cedula at Valid ID.\n• **Certificate of Residency:** ₱30.00. Dalhin ang billing o patunay ng tirahan sa barangay.\n• **Certificate of Indigency:** 100% LIBRE (₱0.00). Para sa medical/financial aid sa DSWD o Malasakit.\n• **Opisina:** Lunes hanggang Biyernes, 8:00 AM - 5:00 PM. Hotline: (02) 8642-1111.",
+        text: "📄 **Gabay sa Serbisyo ng Barangay 4A:**\n\n• **Barangay Clearance:** ₱50.00 (Libre para sa First-Time Jobseekers RA 11261). Dalhin ang Cedula at Valid ID.\n• **Certificate of Residency:** ₱30.00. Dalhin ang billing o patunay ng tirahan sa barangay.\n• **Certificate of Indigency:** 100% LIBRE (₱0.00). Para sa medical/financial aid sa DSWD o Malasakit.\n• **Opisina:** Lunes hanggang Biyernes, 8:00 AM - 5:00 PM. Hotline: (02) 8642-1111.",
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         source: 'knowledge-base'
       };
@@ -124,7 +124,7 @@ export const AICitizenAssistant: React.FC = () => {
               </span>
             </div>
             <p className="text-xs text-slate-500 mt-0.5">
-              Friendly civic assistant for Barangay San Jose services, requirements, and office schedules.
+              Friendly civic assistant for Barangay 4A services, requirements, and office schedules.
             </p>
           </div>
         </div>

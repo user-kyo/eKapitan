@@ -46,6 +46,40 @@ export const Header: React.FC = () => {
     setMobileMenuOpen(false);
   };
 
+  const citizenTabs = [
+    { id: 'home', label: 'Overview' },
+    { id: 'services', label: 'Services & Clearances' },
+    { id: 'tracking', label: 'My Applications' },
+    { id: 'complaints', label: 'Report Incident' },
+    { id: 'appointments', label: 'Book Appointment' },
+    { id: 'qr_verify', label: 'Verify QR Code' },
+    { id: 'ai_assistant', label: 'Ka-Barangay AI' },
+    { id: 'announcements', label: 'Advisories' },
+    { id: 'officials_directory', label: 'Officials Directory' },
+  ];
+
+  const staffTabs = [
+    { id: 'dashboard', label: 'Operations Desk' },
+    { id: 'staff_documents', label: 'Document Queue' },
+    { id: 'staff_queue', label: 'Smart Counter Queue' },
+    { id: 'staff_residents', label: 'Resident Masterlist' },
+    { id: 'staff_incidents', label: 'Blotter & Lupon' },
+    { id: 'staff_cashier', label: 'Treasury & Revenue' },
+    { id: 'staff_announcements', label: 'Publish Advisory' },
+  ];
+
+  const officialTabs = [
+    { id: 'executive_dashboard', label: 'Executive Intelligence' },
+    { id: 'official_blotter', label: 'Peace & Order Blotter' },
+    { id: 'official_audit', label: 'Audit Trail' },
+    { id: 'official_announcements', label: 'Barangay Advisories' },
+    { id: 'manage_officials', label: 'Manage Officials' },
+  ];
+
+  const currentTabs = 
+    currentRole === 'citizen' ? citizenTabs :
+    currentRole === 'staff' ? staffTabs : officialTabs;
+
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
       {/* Top Civic Utility Bar */}
@@ -53,7 +87,7 @@ export const Header: React.FC = () => {
         <div className="flex items-center gap-3">
           <span className="inline-flex items-center gap-1.5 font-medium tracking-wide text-slate-300">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            Republic of the Philippines • City of Pasig • Barangay San Jose
+            Republic of the Philippines • City of Pasig • Barangay 4A
           </span>
           <span className="hidden md:inline text-slate-500">|</span>
           <span className="hidden md:inline text-slate-400">Office Hours: Mon - Fri 8:00 AM - 5:00 PM</span>
@@ -66,7 +100,7 @@ export const Header: React.FC = () => {
             id="emergency-hotlines-btn"
           >
             <PhoneCall className="w-3.5 h-3.5" />
-            <span>Emergency: (02) 8642-1111</span>
+            <span>Emergency: (049) 562-1111</span>
           </button>
 
           {/* Large Text / Accessibility Toggle */}
@@ -99,7 +133,7 @@ export const Header: React.FC = () => {
             <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-emerald-600 to-teal-800 flex items-center justify-center text-white shadow-md shadow-emerald-900/10 border-2 border-amber-300/60 shrink-0">
               <Building2 className="w-6 h-6 text-white" />
               <span className="absolute -bottom-1 -right-1 bg-amber-400 text-slate-950 text-[10px] font-extrabold px-1 rounded-full border border-white">
-                SJ
+                4A
               </span>
             </div>
             
@@ -109,7 +143,7 @@ export const Header: React.FC = () => {
                   e-Kapitan
                 </span>
                 <span className="hidden sm:inline-block bg-emerald-100 text-emerald-800 text-[11px] font-semibold px-2 py-0.5 rounded-full border border-emerald-200 whitespace-nowrap">
-                  Barangay San Jose
+                  Barangay 4A
                 </span>
               </div>
               <p className="text-xs text-slate-500 hidden md:block truncate">
@@ -332,7 +366,7 @@ export const Header: React.FC = () => {
 
       {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-4 shadow-xl">
+        <div className="lg:hidden absolute top-full left-0 w-full border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-4 shadow-xl animate-in fade-in slide-in-from-top-2">
           <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
             <span className="text-xs font-bold text-slate-700 block mb-2">Switch Active View:</span>
             <div className="grid grid-cols-3 gap-1.5">
@@ -364,20 +398,27 @@ export const Header: React.FC = () => {
           </div>
 
           <div className="flex flex-col gap-1">
-            <button
-              onClick={() => { setActiveTab('qr_verify'); setMobileMenuOpen(false); }}
-              className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-100"
-            >
-              <FileCheck2 className="w-4 h-4 text-emerald-600" />
-              <span>QR Document Verification</span>
-            </button>
-            <button
-              onClick={() => { setActiveTab('ai_assistant'); setMobileMenuOpen(false); }}
-              className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-semibold text-emerald-800 bg-emerald-50"
-            >
-              <Sparkles className="w-4 h-4 text-emerald-600" />
-              <span>Ask Ka-Barangay AI</span>
-            </button>
+            <span className="text-xs font-bold text-slate-700 block mb-1 px-1">Navigation:</span>
+            {currentTabs.map((tab) => {
+              const isActive = activeTab === tab.id || (tab.id === 'dashboard' && activeTab === 'staff_dashboard') || (tab.id === 'executive_dashboard' && activeTab === 'official_dashboard');
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => { setActiveTab(tab.id); setMobileMenuOpen(false); }}
+                  className={`px-3 py-2.5 rounded-lg text-sm font-semibold text-left transition-colors ${
+                    isActive
+                      ? currentRole === 'citizen'
+                        ? 'bg-emerald-700 text-white'
+                        : currentRole === 'staff'
+                        ? 'bg-blue-700 text-white'
+                        : 'bg-purple-800 text-white'
+                      : 'text-slate-700 hover:bg-slate-100'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
@@ -389,7 +430,7 @@ export const Header: React.FC = () => {
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2 text-rose-600 font-bold text-lg font-heading">
                 <PhoneCall className="w-5 h-5" />
-                <span>Barangay San Jose Emergency Hotlines</span>
+                <span>Barangay 4A Emergency Hotlines</span>
               </div>
               <button
                 onClick={() => setHotlineModalOpen(false)}
@@ -403,7 +444,7 @@ export const Header: React.FC = () => {
               <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-between">
                 <div>
                   <p className="text-xs font-bold text-rose-900">Barangay Emergency Operations (24/7)</p>
-                  <p className="text-sm font-extrabold text-rose-700 mt-0.5">(02) 8642-1111 / 0917-888-5673</p>
+                  <p className="text-sm font-extrabold text-rose-700 mt-0.5">(049) 562-1111 / 0917-888-5673</p>
                 </div>
                 <span className="text-[10px] font-bold bg-rose-200 text-rose-900 px-2 py-1 rounded-md">24/7 Blue Alert</span>
               </div>
@@ -411,15 +452,15 @@ export const Header: React.FC = () => {
               <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                 <div>
                   <p className="text-xs font-bold text-slate-800">Barangay Tanod Headquarters (Security)</p>
-                  <p className="text-sm font-semibold text-slate-900 mt-0.5">(02) 8642-2222</p>
+                  <p className="text-sm font-semibold text-slate-900 mt-0.5">(049) 562-2222</p>
                 </div>
                 <span className="text-[10px] text-slate-500">Patrol Base</span>
               </div>
 
               <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                 <div>
-                  <p className="text-xs font-bold text-slate-800">Barangay San Jose Health Center</p>
-                  <p className="text-sm font-semibold text-slate-900 mt-0.5">(02) 8642-3333</p>
+                  <p className="text-xs font-bold text-slate-800">Barangay 4A Health Center</p>
+                  <p className="text-sm font-semibold text-slate-900 mt-0.5">(049) 562-3333</p>
                 </div>
                 <span className="text-[10px] text-slate-500">Ambulance Dispatch</span>
               </div>

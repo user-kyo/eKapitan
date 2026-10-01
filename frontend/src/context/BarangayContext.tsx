@@ -15,7 +15,8 @@ import {
   PriorityCriteriaConfig,
   DuplicateRecordFlag,
   RequestStatus,
-  IncidentStatus
+  IncidentStatus,
+  Official
 } from '../types';
 import { 
   INITIAL_SERVICES, 
@@ -28,7 +29,8 @@ import {
   INITIAL_ANNOUNCEMENTS, 
   INITIAL_PRIORITY_CRITERIA, 
   INITIAL_KNOWLEDGE_BASE, 
-  INITIAL_AUDIT_LOGS 
+  INITIAL_AUDIT_LOGS,
+  INITIAL_OFFICIALS
 } from '../data/mockData';
 
 export interface ToastMessage {
@@ -58,6 +60,7 @@ interface BarangayContextType {
   residents: Resident[];
   households: Household[];
   duplicateFlags: DuplicateRecordFlag[];
+  officials: Official[];
   documentRequests: DocumentRequest[];
   queueTickets: QueueTicket[];
   incidents: IncidentReport[];
@@ -73,6 +76,7 @@ interface BarangayContextType {
   
   createQueueTicket: (data: Partial<QueueTicket>) => QueueTicket;
   callQueueTicket: (ticketId: string, counterNumber?: number) => void;
+  callNextQueueTicket: (counterNumber: number) => void;
   completeQueueTicket: (ticketId: string) => void;
   dismissQueueTicket: (ticketId: string) => void;
   
@@ -87,6 +91,10 @@ interface BarangayContextType {
   updateKnowledgeItem: (id: string, updates: Partial<KnowledgeBaseItem>) => void;
   
   bookAppointment: (data: Omit<Appointment, 'id' | 'referenceNumber'>) => Appointment;
+  createAnnouncement: (data: Partial<Announcement>) => void;
+
+  updateOfficial: (id: string, updates: Partial<Official>) => void;
+  addOfficial: (data: Omit<Official, 'id'>) => Official;
 
   // Modals / Inspections
   selectedRequestForReview: DocumentRequest | null;
@@ -148,6 +156,7 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [residents, setResidents] = useState<Resident[]>(INITIAL_RESIDENTS);
   const [households] = useState<Household[]>(INITIAL_HOUSEHOLDS);
   const [duplicateFlags, setDuplicateFlags] = useState<DuplicateRecordFlag[]>(INITIAL_DUPLICATE_FLAGS);
+  const [officials, setOfficials] = useState<Official[]>(INITIAL_OFFICIALS);
   const [documentRequests, setDocumentRequests] = useState<DocumentRequest[]>(INITIAL_DOCUMENT_REQUESTS);
   const [queueTickets, setQueueTickets] = useState<QueueTicket[]>(INITIAL_QUEUE);
   const [incidents, setIncidents] = useState<IncidentReport[]>(INITIAL_INCIDENTS);
@@ -164,7 +173,7 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       referenceNumber: 'APT-2026-0044'
     }
   ]);
-  const [announcements] = useState<Announcement[]>(INITIAL_ANNOUNCEMENTS);
+  const [announcements, setAnnouncements] = useState<Announcement[]>(INITIAL_ANNOUNCEMENTS);
   const [auditLogs, setAuditLogs] = useState<AuditLog[]>(INITIAL_AUDIT_LOGS);
   const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeBaseItem[]>(INITIAL_KNOWLEDGE_BASE);
   const [priorityCriteria, setPriorityCriteria] = useState<PriorityCriteriaConfig[]>(INITIAL_PRIORITY_CRITERIA);
@@ -224,7 +233,7 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const createDocumentRequest = (data: Partial<DocumentRequest>): DocumentRequest => {
     const refNum = `REQ-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-    const verCode = `VER-BSJ-${Math.floor(10000 + Math.random() * 90000)}-${Math.floor(10 + Math.random() * 90)}`;
+    const verCode = `VER-B4A-${Math.floor(10000 + Math.random() * 90000)}-${Math.floor(10 + Math.random() * 90)}`;
     
     const newReq: DocumentRequest = {
       id: 'req-' + Date.now(),
@@ -429,7 +438,7 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       category: data.category || 'Other Community Concern',
       title: data.title || 'Barangay Concern Report',
       description: data.description || '',
-      location: data.location || 'Barangay San Jose',
+      location: data.location || 'Barangay 4A',
       purok: data.purok || 'Purok 1 - Centro',
       incidentDateTime: data.incidentDateTime || new Date().toISOString().substring(0, 16).replace('T', ' '),
       reporterName: data.isAnonymous ? 'Anonymous Resident' : (data.reporterName || currentUser.name),
@@ -483,7 +492,7 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const registerResident = (data: Omit<Resident, 'id' | 'residentNumber' | 'registeredDate'>): Resident => {
-    const resNum = `BSJ-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+    const resNum = `B4A-2026-${Math.floor(1000 + Math.random() * 9000)}`;
     const newResident: Resident = {
       ...data,
       id: 'res-' + Date.now(),
@@ -600,7 +609,7 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         return {
           found: true,
           document: doc,
-          message: 'Document record verified as authentic and legally issued by Barangay San Jose.'
+          message: 'Document record verified as authentic and legally issued by Barangay 4A.'
         };
       }
       return {
@@ -614,6 +623,48 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       found: false,
       message: 'No matching barangay record was found for this reference code or QR stamp. Verify the code or contact the Barangay Hall.'
     };
+  };
+
+  const updateOfficial = (id: string, updates: Partial<Official>) => {
+    setOfficials((prev) => prev.map((o) => (o.id === id ? { ...o, ...updates } : o)));
+    logAudit('Update Official', 'Records', `Updated official record for ID: ${id}`);
+    addToast('Official Updated', 'The barangay official record has been updated successfully.', 'success');
+  };
+
+  const addOfficial = (data: Omit<Official, 'id'>) => {
+    const newOfficial: Official = {
+      ...data,
+      id: `off-${Date.now()}`
+    };
+    setOfficials((prev) => [...prev, newOfficial]);
+    logAudit('Add Official', 'Records', `Added new official: ${data.name}`);
+    addToast('Official Added', 'A new barangay official has been added to the directory.', 'success');
+    return newOfficial;
+  };
+
+  const createAnnouncement = (data: Partial<Announcement>) => {
+    const newAnnouncement: Announcement = {
+      id: 'ann-' + Date.now(),
+      title: data.title || '',
+      content: data.content || '',
+      category: data.category as any || 'Advisory',
+      targetPurok: data.targetPurok || 'All',
+      isUrgent: !!data.isUrgent,
+      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      author: currentUser.name
+    };
+    setAnnouncements(prev => [newAnnouncement, ...prev]);
+    logAudit('Add Announcement', 'Configuration', `Created announcement: ${data.title}`);
+    addToast('Announcement Posted', 'The advisory is now visible to the public.', 'success');
+  };
+
+  const callNextQueueTicket = (counterNumber: number) => {
+    const nextTicket = queueTickets.find(t => t.status === 'waiting');
+    if (nextTicket) {
+      callQueueTicket(nextTicket.id, counterNumber);
+    } else {
+      addToast('Queue Empty', 'There are no waiting tickets in the queue.', 'info');
+    }
   };
 
   return (
@@ -631,6 +682,7 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         residents,
         households,
         duplicateFlags,
+        officials,
         documentRequests,
         queueTickets,
         incidents,
@@ -643,6 +695,7 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         updateDocumentRequestStatus,
         createQueueTicket,
         callQueueTicket,
+        callNextQueueTicket,
         completeQueueTicket,
         dismissQueueTicket,
         createIncidentReport,
@@ -653,6 +706,9 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         addKnowledgeItem,
         updateKnowledgeItem,
         bookAppointment,
+        createAnnouncement,
+        updateOfficial,
+        addOfficial,
         selectedRequestForReview,
         setSelectedRequestForReview,
         selectedTicketForExplanation,

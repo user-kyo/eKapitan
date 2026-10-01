@@ -12,9 +12,19 @@ export interface UserProfile {
 
 export type ResidentStatus = 'active' | 'archived' | 'deceased' | 'transferred';
 
+export interface Official {
+  id: string;
+  name: string;
+  position: string;
+  committee: string;
+  contactDetails: string;
+  isActive: boolean;
+  avatarUrl?: string;
+}
+
 export interface Resident {
   id: string;
-  residentNumber: string; // e.g., "BSJ-2024-0012"
+  residentNumber: string; // e.g., "B4A-2024-0012"
   firstName: string;
   middleName?: string;
   lastName: string;
@@ -31,6 +41,7 @@ export interface Resident {
   occupation: string;
   isSenior: boolean;
   isPWD: boolean;
+  isIndigent?: boolean;
   isVoter: boolean;
   registeredDate: string;
   status: ResidentStatus;

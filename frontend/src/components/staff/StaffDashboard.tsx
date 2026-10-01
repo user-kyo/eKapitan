@@ -50,7 +50,7 @@ export const StaffDashboard: React.FC<StaffDashboardProps> = ({ onOpenWalkInModa
         <div>
           <div className="flex items-center gap-2 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-1">
             <Building2 className="w-4 h-4" />
-            <span>Barangay San Jose Operations Center</span>
+            <span>Barangay 4A Operations Center</span>
           </div>
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 font-heading">
             Staff Operations & Service Dashboard
@@ -63,7 +63,7 @@ export const StaffDashboard: React.FC<StaffDashboardProps> = ({ onOpenWalkInModa
         {/* Quick Operational Actions */}
         <div className="flex flex-wrap items-center gap-2">
           <button
-            onClick={() => callNextQueueTicket('Counter 1 (Clearances)')}
+            onClick={() => callNextQueueTicket(1)}
             className="px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-xs sm:text-sm shadow-xs transition-all flex items-center gap-2 cursor-pointer"
             id="call-next-ticket-quick-btn"
           >

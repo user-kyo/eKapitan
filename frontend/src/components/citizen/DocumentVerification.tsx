@@ -15,8 +15,8 @@ import {
 } from 'lucide-react';
 
 export const DocumentVerification: React.FC = () => {
-  const { verifyDocumentByCode, setSelectedDocumentForPrint, largeTextMode } = useBarangay();
-  const [inputCode, setInputCode] = useState<string>('VER-BSJ-78921-99');
+  const { verifyDocumentCode, setSelectedDocumentForPrint, largeTextMode } = useBarangay();
+  const [inputCode, setInputCode] = useState<string>('VER-B4A-78921-99');
   const [searched, setSearched] = useState<boolean>(false);
   const [verifiedDoc, setVerifiedDoc] = useState<any | null>(null);
 
@@ -24,14 +24,14 @@ export const DocumentVerification: React.FC = () => {
     e.preventDefault();
     if (!inputCode.trim()) return;
 
-    const result = verifyDocumentByCode(inputCode.trim());
+    const result = verifyDocumentCode(inputCode.trim());
     setVerifiedDoc(result || null);
     setSearched(true);
   };
 
   const sampleCodes = [
-    { code: 'VER-BSJ-78921-99', label: 'Juan Dela Cruz (Clearance)' },
-    { code: 'VER-BSJ-64112-42', label: 'Maria Santos (Residency)' },
+    { code: 'VER-B4A-78921-99', label: 'Juan Dela Cruz (Clearance)' },
+    { code: 'VER-B4A-64112-42', label: 'Maria Santos (Residency)' },
     { code: 'REQ-2026-0819', label: 'By Reference Number' }
   ];
 
@@ -46,7 +46,7 @@ export const DocumentVerification: React.FC = () => {
           Official Document Authenticity Verifier
         </h2>
         <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-lg mx-auto">
-          Verify documents issued by Barangay San Jose, Pasig City. External organizations (banks, employers, schools) can validate clearance credentials in real-time.
+          Verify documents issued by Barangay 4A, San Pablo City, Laguna. External organizations (banks, employers, schools) can validate clearance credentials in real-time.
         </p>
 
         {/* Verification Form */}
@@ -55,7 +55,7 @@ export const DocumentVerification: React.FC = () => {
             <QrCode className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
             <input
               type="text"
-              placeholder="Enter QR hash (e.g. VER-BSJ-...) or Ref..."
+              placeholder="Enter QR hash (e.g. VER-B4A-...) or Ref..."
               value={inputCode}
               onChange={(e) => setInputCode(e.target.value)}
               className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:bg-white focus:outline-indigo-600 font-mono"
@@ -108,7 +108,7 @@ export const DocumentVerification: React.FC = () => {
                       OFFICIAL & AUTHENTIC BARANGAY RECORD
                     </h3>
                     <p className="text-xs text-emerald-800">
-                      Validated against Barangay San Jose Civil Registry cryptographic ledger.
+                      Validated against Barangay 4A Civil Registry cryptographic ledger.
                     </p>
                   </div>
                 </div>
@@ -139,7 +139,7 @@ export const DocumentVerification: React.FC = () => {
                     Residency Jurisdiction
                   </span>
                   <span className="font-semibold text-slate-900 mt-0.5 block">
-                    {verifiedDoc.purok}, Barangay San Jose, Pasig City
+                    {verifiedDoc.purok}, Barangay 4A, San Pablo City, Laguna
                   </span>
                 </div>
 
@@ -191,7 +191,7 @@ export const DocumentVerification: React.FC = () => {
                 UNVERIFIED / INVALID DOCUMENT CODE
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto">
-                The code "{inputCode}" was not found in the official records registry of Barangay San Jose. It may be expired, misspelled, or fraudulent.
+                The code "{inputCode}" was not found in the official records registry of Barangay 4A. It may be expired, misspelled, or fraudulent.
               </p>
             </div>
           )}
