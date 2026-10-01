@@ -18,6 +18,7 @@ import { ComplaintsView } from './components/citizen/ComplaintsView';
 import { AICitizenAssistant } from './components/citizen/AICitizenAssistant';
 import { DocumentVerification } from './components/citizen/DocumentVerification';
 import { AppointmentsView } from './components/citizen/AppointmentsView';
+import { OfficialsDirectory } from './components/citizen/OfficialsDirectory';
 
 // Staff Components
 import { StaffDashboard } from './components/staff/StaffDashboard';
@@ -31,6 +32,7 @@ import { CashierRevenueDesk } from './components/staff/CashierRevenueDesk';
 import { ExecutiveDashboard } from './components/official/ExecutiveDashboard';
 import { AuditTrailViewer } from './components/official/AuditTrailViewer';
 import { OfficialAnnouncementsManager } from './components/official/OfficialAnnouncementsManager';
+import { ManageOfficials } from './components/official/ManageOfficials';
 
 import { 
   Building2, 
@@ -72,6 +74,7 @@ const MainAppContent: React.FC = () => {
     { id: 'qr_verify', label: 'Verify QR Code' },
     { id: 'ai_assistant', label: 'Ka-Barangay AI' },
     { id: 'announcements', label: 'Advisories' },
+    { id: 'officials_directory', label: 'Officials Directory' },
   ];
 
   const staffTabs = [
@@ -89,6 +92,7 @@ const MainAppContent: React.FC = () => {
     { id: 'official_blotter', label: 'Peace & Order Blotter' },
     { id: 'official_audit', label: 'Audit Trail' },
     { id: 'official_announcements', label: 'Barangay Advisories' },
+    { id: 'manage_officials', label: 'Manage Officials' },
   ];
 
   const currentTabs = 
@@ -123,6 +127,8 @@ const MainAppContent: React.FC = () => {
         return <AppointmentsView />;
       case 'announcements':
         return <OfficialAnnouncementsManager />;
+      case 'officials_directory':
+        return <OfficialsDirectory />;
 
       // Staff Views
       case 'dashboard':
@@ -152,6 +158,8 @@ const MainAppContent: React.FC = () => {
         return <AuditTrailViewer />;
       case 'official_announcements':
         return <OfficialAnnouncementsManager />;
+      case 'manage_officials':
+        return <ManageOfficials />;
 
       default:
         return currentRole === 'citizen' 
@@ -173,7 +181,7 @@ const MainAppContent: React.FC = () => {
       <Header />
 
       {/* Role-Specific Sub-Navbar Navigation */}
-      <div className="bg-white border-b border-slate-200 sticky top-16 sm:top-20 z-30 shadow-2xs overflow-x-auto scrollbar-none">
+      <div className="hidden lg:block bg-white border-b border-slate-200 sticky top-16 sm:top-20 z-30 shadow-2xs overflow-x-auto scrollbar-none">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-1 sm:gap-2 py-2.5">
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mr-2 hidden md:inline">
@@ -222,11 +230,11 @@ const MainAppContent: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full border border-slate-300 flex items-center justify-center font-bold text-[11px] text-emerald-800 bg-emerald-50">
-              BSJ
+              B4A
             </div>
             <div>
               <p className="font-bold text-slate-800 text-xs">
-                e-Kapitan Civic Platform • Barangay San Jose, Pasig City
+                e-Kapitan Civic Platform • Barangay 4A, San Pablo City, Laguna
               </p>
               <p className="text-[11px] text-slate-500 mt-0.5">
                 Republic of the Philippines • National Capital Region • Anti-Red Tape Authority (ARTA) Compliant

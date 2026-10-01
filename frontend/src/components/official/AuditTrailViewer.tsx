@@ -17,16 +17,16 @@ export const AuditTrailViewer: React.FC = () => {
   const [filterModule, setFilterModule] = useState<string>('All');
 
   const filteredLogs = auditLogs.filter((log) => {
-    const matchesModule = filterModule === 'All' || log.module === filterModule;
+    const matchesModule = filterModule === 'All' || log.category === filterModule;
     const matchesSearch = 
       log.action.toLowerCase().includes(searchQuery.toLowerCase()) ||
       log.userName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      log.targetId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      log.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
       log.details.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesModule && matchesSearch;
   });
 
-  const modules = ['All', 'Document Processing', 'Queue System', 'Incident Blotter', 'Civil Registry', 'Auth / Roles'];
+  const modules = ['All', 'Records', 'Documents', 'Queue', 'Security', 'Configuration'];
 
   return (
     <div className={`space-y-6 ${largeTextMode ? 'text-lg' : 'text-base'}`}>
@@ -118,11 +118,11 @@ export const AuditTrailViewer: React.FC = () => {
                   </td>
                   <td className="px-5 py-3">
                     <span className="text-[10px] font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full">
-                      {log.module}
+                      {log.category}
                     </span>
                   </td>
                   <td className="px-5 py-3 font-mono text-[11px] text-indigo-700 font-bold">
-                    {log.targetId}
+                    {log.id}
                   </td>
                   <td className="px-5 py-3 text-slate-600 text-xs max-w-xs">
                     {log.details}

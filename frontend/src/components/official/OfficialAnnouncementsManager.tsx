@@ -17,7 +17,7 @@ export const OfficialAnnouncementsManager: React.FC = () => {
   const [showAddModal, setShowAddModal] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
-  const [category, setCategory] = useState<'Health Advisory' | 'Public Advisory' | 'Community Event' | 'Emergency Alert'>('Public Advisory');
+  const [category, setCategory] = useState<'Health' | 'Advisory' | 'Event' | 'Program' | 'Emergency'>('Advisory');
   const [targetPurok, setTargetPurok] = useState<string>('All Puroks (General Public)');
   const [isUrgent, setIsUrgent] = useState<boolean>(false);
 
@@ -133,10 +133,11 @@ export const OfficialAnnouncementsManager: React.FC = () => {
                     onChange={(e) => setCategory(e.target.value as any)}
                     className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs"
                   >
-                    <option value="Health Advisory">Health Advisory</option>
-                    <option value="Public Advisory">Public Advisory</option>
-                    <option value="Community Event">Community Event</option>
-                    <option value="Emergency Alert">Emergency Alert</option>
+                    <option value="Health">Health</option>
+                    <option value="Advisory">Advisory</option>
+                    <option value="Event">Event</option>
+                    <option value="Program">Program</option>
+                    <option value="Emergency">Emergency</option>
                   </select>
                 </div>
 

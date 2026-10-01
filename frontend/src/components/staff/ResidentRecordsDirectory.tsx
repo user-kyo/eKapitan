@@ -74,7 +74,7 @@ export const ResidentRecordsDirectory: React.FC = () => {
       birthDate: newBirthdate,
       gender: newGender,
       civilStatus: 'Single',
-      address: `${newPurok}, Barangay San Jose, Pasig City`,
+      address: `${newPurok}, Barangay 4A, San Pablo City, Laguna`,
       purok: newPurok,
       householdId: `HH-2026-00${residents.length + 1}`,
       isHouseholdHead: false,
@@ -101,7 +101,7 @@ export const ResidentRecordsDirectory: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 text-purple-700 text-xs font-bold uppercase tracking-wider mb-1">
             <Users className="w-4 h-4" />
-            <span>Barangay San Jose Civil Masterlist</span>
+            <span>Barangay 4A Civil Masterlist</span>
           </div>
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 font-heading">
             Resident Information & Household Records
