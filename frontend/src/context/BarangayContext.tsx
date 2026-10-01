@@ -42,6 +42,8 @@ export interface ToastMessage {
 
 interface BarangayContextType {
   // Authentication / Role
+  isAuthenticated: boolean;
+  setIsAuthenticated: (val: boolean) => void;
   currentRole: UserRole;
   setCurrentRole: (role: UserRole) => void;
   currentUser: UserProfile;
@@ -145,6 +147,10 @@ const ROLE_PROFILES: Record<UserRole, UserProfile> = {
   },
   guest: {
     id: 'user-guest',
+    name: 'Guest User',
+    role: 'guest',
+    roleTitle: 'Non-Resident / Guest',
+    email: 'guest@e-kapitan.local',
     name: 'Public Guest',
     role: 'guest',
     roleTitle: 'Unregistered Guest / Non-Resident',
@@ -153,6 +159,7 @@ const ROLE_PROFILES: Record<UserRole, UserProfile> = {
 };
 
 export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [currentRole, setCurrentRole] = useState<UserRole>('citizen');
   const [currentUser, setCurrentUser] = useState<UserProfile>(ROLE_PROFILES.citizen);
   const [activeTab, setActiveTab] = useState<string>('home');
@@ -230,6 +237,8 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       setActiveTab('announcements');
     } else if (role === 'staff') {
       setActiveTab('dashboard');
+    } else if (role === 'guest') {
+      setActiveTab('guest_home');
     } else {
       setActiveTab('executive_dashboard');
     }
@@ -679,6 +688,8 @@ export const BarangayProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   return (
     <BarangayContext.Provider
       value={{
+        isAuthenticated,
+        setIsAuthenticated,
         currentRole,
         setCurrentRole,
         currentUser,

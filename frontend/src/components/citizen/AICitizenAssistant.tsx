@@ -29,6 +29,7 @@ export const AICitizenAssistant: React.FC = () => {
     {
       id: 'msg-1',
       sender: 'assistant',
+      text: "Mabuhay! Ako si **Ka-Barangay AI**, ang inyong digital citizen information assistant sa Barangay 4A, San Pablo City.\n\nAno po ang maaari kong maitulong tungkol sa mga dokumento (Clearance, Residency, Indigency), requirements, bayarin, o schedule ng barangay hall?",
       text: "Mabuhay! Ako si **Ka-Barangay AI**, ang inyong digital citizen information assistant sa Barangay 4A, San Pablo City, Laguna.\n\nAno po ang maaari kong maitulong tungkol sa mga dokumento (Clearance, Residency, Indigency), requirements, bayarin, o schedule ng barangay hall?",
       time: 'Just now',
       source: 'knowledge-base'
@@ -109,20 +110,22 @@ export const AICitizenAssistant: React.FC = () => {
   };
 
   return (
-    <div className={`max-w-4xl mx-auto space-y-4 ${largeTextMode ? 'text-lg' : 'text-base'}`}>
+    <div className={`max-w-4xl mx-auto space-y-6 sm:space-y-8 ${largeTextMode ? 'text-lg' : 'text-base'}`}>
       {/* Header Banner with Civic AI Disclaimer */}
-      <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 text-white flex items-center justify-center shadow-md shadow-emerald-700/20 shrink-0">
-            <Sparkles className="w-6 h-6 text-amber-300" />
+      <div className="bg-white rounded-[2rem] p-6 sm:p-8 border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 opacity-50 pointer-events-none"></div>
+        <div className="flex items-center gap-4 relative z-10">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 text-white flex items-center justify-center shadow-lg shadow-emerald-700/20 shrink-0">
+            <Sparkles className="w-7 h-7 text-amber-300" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-lg font-bold text-slate-900 font-heading">Ka-Barangay AI Citizen Guide</h2>
+            <div className="flex items-center gap-2 mb-1">
+              <h2 className="text-xl font-bold text-slate-900 font-heading tracking-tight">Ka-Barangay AI Citizen Guide</h2>
               <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full border border-emerald-200">
-                Official Knowledge Base
+                Official
               </span>
             </div>
+            <p className="text-sm text-slate-500">
             <p className="text-xs text-slate-500 mt-0.5">
               Friendly civic assistant for Barangay 4A services, requirements, and office schedules.
             </p>
@@ -130,39 +133,39 @@ export const AICitizenAssistant: React.FC = () => {
         </div>
 
         {/* Informational Authority Disclaimer */}
-        <div className="bg-amber-50 text-amber-900 text-[11px] p-2.5 rounded-xl border border-amber-200 flex items-start gap-2 max-w-sm">
-          <Info className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
-          <span className="leading-tight">
-            <strong>Informational Assistant Only:</strong> Does not issue official clearances, legal rulings, or formal decisions.
+        <div className="bg-amber-50 text-amber-900 text-xs p-3.5 rounded-xl border border-amber-200 flex items-start gap-2.5 max-w-sm relative z-10 shadow-sm">
+          <Info className="w-5 h-5 text-amber-700 shrink-0" />
+          <span className="leading-relaxed">
+            <strong>Informational Only:</strong> Does not issue official clearances, legal rulings, or formal decisions.
           </span>
         </div>
       </div>
 
       {/* Main Conversational Container */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs flex flex-col h-[560px] overflow-hidden">
+      <div className="bg-white rounded-[2rem] border border-slate-200 shadow-sm flex flex-col h-[600px] sm:h-[650px] overflow-hidden relative">
         {/* Messages Stream */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-slate-50/50">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-8 space-y-6 bg-slate-50/50">
           {messages.map((msg) => {
             const isUser = msg.sender === 'user';
             return (
               <div
                 key={msg.id}
-                className={`flex items-start gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
+                className={`flex items-start gap-3 sm:gap-4 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
               >
                 <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold ${
-                    isUser ? 'bg-slate-800 text-white' : 'bg-emerald-600 text-white shadow-xs'
+                  className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-sm font-bold ${
+                    isUser ? 'bg-slate-800 text-white' : 'bg-emerald-600 text-white shadow-md'
                   }`}
                 >
-                  {isUser ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4 text-amber-300" />}
+                  {isUser ? <User className="w-5 h-5" /> : <Bot className="w-5 h-5 text-amber-300" />}
                 </div>
 
-                <div className={`max-w-[85%] sm:max-w-[75%] space-y-1`}>
+                <div className={`max-w-[85%] sm:max-w-[75%] space-y-1.5`}>
                   <div
-                    className={`p-4 rounded-2xl text-xs sm:text-sm leading-relaxed whitespace-pre-line shadow-2xs ${
+                    className={`p-4 sm:p-5 rounded-2xl text-sm sm:text-base leading-relaxed whitespace-pre-line shadow-sm ${
                       isUser
-                        ? 'bg-slate-900 text-white rounded-tr-xs'
-                        : 'bg-white text-slate-800 border border-slate-200 rounded-tl-xs'
+                        ? 'bg-slate-900 text-white rounded-tr-sm'
+                        : 'bg-white text-slate-800 border border-slate-200 rounded-tl-sm'
                     }`}
                   >
                     {msg.text}
@@ -197,7 +200,7 @@ export const AICitizenAssistant: React.FC = () => {
         </div>
 
         {/* Suggested Quick Prompt Chips */}
-        <div className="px-4 py-2.5 bg-white border-t border-slate-100 flex items-center gap-2 overflow-x-auto scrollbar-none">
+        <div className="px-4 sm:px-6 py-3 bg-white border-t border-slate-100 flex items-center gap-3 overflow-x-auto scrollbar-none shadow-sm z-10 relative">
           <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider shrink-0">
             Suggested:
           </span>
@@ -205,7 +208,7 @@ export const AICitizenAssistant: React.FC = () => {
             <button
               key={idx}
               onClick={() => handleSend(prompt)}
-              className="text-xs bg-slate-100 hover:bg-emerald-50 hover:text-emerald-800 text-slate-700 px-3 py-1.5 rounded-xl whitespace-nowrap transition-colors border border-slate-200 hover:border-emerald-300 cursor-pointer"
+              className="text-xs sm:text-sm bg-slate-50 hover:bg-emerald-50 hover:text-emerald-800 text-slate-600 px-4 py-2 rounded-xl whitespace-nowrap transition-all duration-300 border border-slate-200 hover:border-emerald-300 cursor-pointer shadow-sm hover:shadow-md"
             >
               {prompt}
             </button>
@@ -213,13 +216,13 @@ export const AICitizenAssistant: React.FC = () => {
         </div>
 
         {/* Input Bar */}
-        <div className="p-3 sm:p-4 bg-white border-t border-slate-200">
+        <div className="p-4 sm:p-6 bg-white border-t border-slate-200 z-10 relative">
           <form
             onSubmit={(e) => {
               e.preventDefault();
               handleSend();
             }}
-            className="flex items-center gap-2"
+            className="flex items-center gap-3"
           >
             <input
               type="text"
@@ -227,16 +230,16 @@ export const AICitizenAssistant: React.FC = () => {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               disabled={isLoading}
-              className="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:bg-white focus:outline-emerald-600 transition-all disabled:opacity-50"
+              className="flex-1 px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm sm:text-base focus:bg-white focus:outline-emerald-600 focus:ring-4 focus:ring-emerald-500/10 transition-all disabled:opacity-50 shadow-inner"
               id="ai-assistant-input"
             />
             <button
               type="submit"
               disabled={!inputValue.trim() || isLoading}
-              className="p-2.5 sm:px-5 sm:py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 text-white rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-xs cursor-pointer flex items-center gap-1.5 shrink-0"
+              className="p-3.5 sm:px-6 sm:py-3.5 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white rounded-xl text-sm font-bold transition-all shadow-md hover:shadow-lg disabled:shadow-none cursor-pointer flex items-center gap-2 shrink-0"
               id="ai-assistant-send-btn"
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-5 h-5" />
               <span className="hidden sm:inline">Send Query</span>
             </button>
           </form>
@@ -244,37 +247,43 @@ export const AICitizenAssistant: React.FC = () => {
       </div>
 
       {/* Direct Shortcuts to Modules */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
         <button
           onClick={() => setActiveTab('request_wizard')}
-          className="p-3 bg-white hover:bg-emerald-50 rounded-xl border border-slate-200 hover:border-emerald-300 transition-all text-left flex items-center gap-3 cursor-pointer"
+          className="p-4 sm:p-5 bg-white hover:bg-emerald-50 rounded-2xl border border-slate-200 hover:border-emerald-300 transition-all duration-300 text-left flex items-center gap-4 cursor-pointer shadow-sm hover:shadow-md group"
         >
-          <FileText className="w-5 h-5 text-emerald-600 shrink-0" />
+          <div className="p-2.5 bg-emerald-100/50 group-hover:bg-emerald-200/50 rounded-xl transition-colors">
+            <FileText className="w-6 h-6 text-emerald-600 shrink-0 group-hover:scale-110 transition-transform" />
+          </div>
           <div>
-            <p className="text-xs font-bold text-slate-900">Ready to Apply?</p>
-            <p className="text-[11px] text-slate-500">Open Document Request Wizard</p>
+            <p className="text-sm font-bold text-slate-900 group-hover:text-emerald-800 transition-colors">Ready to Apply?</p>
+            <p className="text-xs text-slate-500 mt-0.5">Open Document Request Wizard</p>
           </div>
         </button>
 
         <button
           onClick={() => setActiveTab('complaints')}
-          className="p-3 bg-white hover:bg-amber-50 rounded-xl border border-slate-200 hover:border-amber-300 transition-all text-left flex items-center gap-3 cursor-pointer"
+          className="p-4 sm:p-5 bg-white hover:bg-amber-50 rounded-2xl border border-slate-200 hover:border-amber-300 transition-all duration-300 text-left flex items-center gap-4 cursor-pointer shadow-sm hover:shadow-md group"
         >
-          <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0" />
+          <div className="p-2.5 bg-amber-100/50 group-hover:bg-amber-200/50 rounded-xl transition-colors">
+            <AlertTriangle className="w-6 h-6 text-amber-600 shrink-0 group-hover:scale-110 transition-transform" />
+          </div>
           <div>
-            <p className="text-xs font-bold text-slate-900">Report an Incident</p>
-            <p className="text-[11px] text-slate-500">File community blotter or concern</p>
+            <p className="text-sm font-bold text-slate-900 group-hover:text-amber-800 transition-colors">Report an Incident</p>
+            <p className="text-xs text-slate-500 mt-0.5">File community blotter or concern</p>
           </div>
         </button>
 
         <button
           onClick={() => setActiveTab('appointments')}
-          className="p-3 bg-white hover:bg-purple-50 rounded-xl border border-slate-200 hover:border-purple-300 transition-all text-left flex items-center gap-3 cursor-pointer"
+          className="p-4 sm:p-5 bg-white hover:bg-purple-50 rounded-2xl border border-slate-200 hover:border-purple-300 transition-all duration-300 text-left flex items-center gap-4 cursor-pointer shadow-sm hover:shadow-md group"
         >
-          <Clock className="w-5 h-5 text-purple-600 shrink-0" />
+          <div className="p-2.5 bg-purple-100/50 group-hover:bg-purple-200/50 rounded-xl transition-colors">
+            <Clock className="w-6 h-6 text-purple-600 shrink-0 group-hover:scale-110 transition-transform" />
+          </div>
           <div>
-            <p className="text-xs font-bold text-slate-900">Book Counter Visit</p>
-            <p className="text-[11px] text-slate-500">Reserve appointment schedule</p>
+            <p className="text-sm font-bold text-slate-900 group-hover:text-purple-800 transition-colors">Book Counter Visit</p>
+            <p className="text-xs text-slate-500 mt-0.5">Reserve appointment schedule</p>
           </div>
         </button>
       </div>

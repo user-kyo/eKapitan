@@ -1,3 +1,4 @@
+export type UserRole = 'citizen' | 'staff' | 'official' | 'guest';
 export type UserRole = 'citizen' | 'guest' | 'staff' | 'official';
 
 export interface UserProfile {

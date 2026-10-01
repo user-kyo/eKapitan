@@ -265,7 +265,7 @@ export const INITIAL_RESIDENTS: Resident[] = [
     isVoter: true,
     registeredDate: '2016-01-18',
     status: 'active',
-    notes: 'PWD ID: PWD-SJ-2022-041 (Orthopedic).'
+    notes: 'PWD ID: PWD-4A-2022-041 (Orthopedic).'
   }
 ];
 
@@ -440,7 +440,7 @@ export const INITIAL_DOCUMENT_REQUESTS: DocumentRequest[] = [
     residentName: 'Ramonito Bautista Flores',
     purok: 'Purok 5 - San Roque',
     contactNumber: '0919-444-1122',
-    purpose: 'Medical and surgical assistance endorsement to Malasakit Center / Pasig General Hospital',
+    purpose: 'Medical and surgical assistance endorsement to Malasakit Center / San Pablo General Hospital',
     status: 'completed',
     submittedAt: '2026-09-07 10:00 AM',
     updatedAt: '2026-09-08 11:30 AM',
@@ -454,7 +454,7 @@ export const INITIAL_DOCUMENT_REQUESTS: DocumentRequest[] = [
     staffNotes: 'Approved by Kagawad on Health. Certificate released and QR validated.',
     verificationCode: 'VER-B4A-99882-77',
     requirementsSubmitted: [
-      { name: 'Medical Abstract from Pasig General Hospital', submitted: true, verified: true },
+      { name: 'Medical Abstract from San Pablo General Hospital', submitted: true, verified: true },
       { name: 'PWD ID card', submitted: true, verified: true },
       { name: 'Purok Leader Verification', submitted: true, verified: true }
     ]

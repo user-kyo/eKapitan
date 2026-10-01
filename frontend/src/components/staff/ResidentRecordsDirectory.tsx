@@ -85,6 +85,7 @@ export const ResidentRecordsDirectory: React.FC = () => {
       birthDate: newBirthdate,
       gender: newGender,
       civilStatus: 'Single',
+      address: `${newPurok}, Barangay 4A, San Pablo City`,
       address: `${newPurok}, Barangay 4A, San Pablo City, Laguna`,
       purok: newPurok,
       householdId: `HH-2026-00${residents.length + 1}`,
